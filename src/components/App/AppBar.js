@@ -11,6 +11,7 @@ const Bar = styled.div`
 const Logo = styled.span`
 
     font-size: 1.2rem;
+    font-weight: 700;
 `
 
 function ControlButton({name}) {
