@@ -5,7 +5,7 @@ export const AppContext = React.createContext();
 
 export default ({children}) => {
     
-    const [page, setPage] = useState('dashboard');
+    const [page, setPage] = useState('settings');
     const [favourites, setFavourites] = useState('');
     const [firstVisit, setFirstVisit] = useState(localStorage.getItem('ancrypto') ? false : true)
     const [coinList, setCoinList] = useState(null)
@@ -14,8 +14,6 @@ export default ({children}) => {
     const fetchCoins = async () => {
         let coins = await cc.coinList()
         coins = coins.Data
-        console.log(coins)
-        return coins;
         try {return coins}
         catch(e) {console.log(e)}
     }
@@ -28,7 +26,6 @@ export default ({children}) => {
 }, [])
 
 
-    useEffect(() => {console.log('CoinList: ', coinList)}, [coinList])
 
     const confirmFavourites = () => {
         console.log('I am a genius')
