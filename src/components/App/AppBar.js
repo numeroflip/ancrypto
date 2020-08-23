@@ -4,12 +4,18 @@ import { AppContext } from './AppProvider'
 
 const Bar = styled.div`
     display: grid;
-    grid-template-columns: auto 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr ;
     align-items: center;
+
+    nav {
+        display: flex; 
+        justify-self: end;
+    }
+
 `
 
 const Logo = styled.span`
-
+    justify-self: start;
     font-size: 1.2rem;
     font-weight: 700;
 `
@@ -53,8 +59,11 @@ export default function(){
     return (
         <Bar>
             <Logo>Ancrypto</Logo>
-            <ControlButton name='dashboard' />
-            <ControlButton name='settings' />
+
+            <nav>
+                <ControlButton name='dashboard' />
+                <ControlButton name='settings' />
+            </nav>
 
         </Bar>
     )
