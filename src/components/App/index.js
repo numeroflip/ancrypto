@@ -3,6 +3,7 @@ import AppLayout from './AppLayout'
 import AppBar from './AppBar'
 import AppProvider from './AppProvider'
 import Settings from '../Settings'
+import Content from '../Shared/Content'
 
 export default function App () {
 
@@ -10,7 +11,9 @@ export default function App () {
     <AppLayout>
       <AppProvider>
         <AppBar />
-        <Settings />
+        <Content>
+          <Settings />
+        </Content>
       </AppProvider>
     </AppLayout>
 
