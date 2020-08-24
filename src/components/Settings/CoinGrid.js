@@ -5,6 +5,7 @@ import CoinTile from './CoinTile'
 
 
 const Grid = styled.div`
+    max-width: 1200px; 
     margin: var(--xl) auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, .8fr));

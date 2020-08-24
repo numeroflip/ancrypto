@@ -1,10 +1,11 @@
 import {createGlobalStyle} from 'styled-components'
 
-export const breakpoints = {
+export const breakPoints = {
   desktop: '1024px',
   tablet: '800px',
   mobile: '600px'
 }
+
 
 
 export default createGlobalStyle`
@@ -33,7 +34,8 @@ export default createGlobalStyle`
     --color-main-darker: #235f9f;
     --color-background: #fff;
     --color-text: #000;
-    --color-text-secondary: gray;
+    --color-secondary: gray;
+    --color-secondary-light: #e6e6e6;
     --color-text-negative: white;
     --color-background: white;
     --color-background-negative: white;
@@ -46,7 +48,7 @@ export default createGlobalStyle`
 
     --radius: 10rem;
 
-    @media(max-width: ${breakpoints.tablet}) {
+    @media(max-width: ${breakPoints.tablet}) {
       :root {
         font-size: 13px;
       }
@@ -57,6 +59,11 @@ export default createGlobalStyle`
     line-height: 1.5;
   }
 
+  html * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
   body {
     margin: 0;

@@ -12,7 +12,7 @@ export const Tile = styled.div`
     color: var(--color-text);
 `
 export const SelectableTile = styled(Tile)`
-    border-left: 4px solid transparent; 
+    border-left: 10px solid transparent; 
     &:hover {
         cursor: pointer;
         box-shadow: var(--shadow)

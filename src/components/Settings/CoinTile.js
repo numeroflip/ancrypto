@@ -6,7 +6,6 @@ import { AppContext } from '../App/AppProvider'
 import CoinImage from '../Shared/CoinImage'
 
 function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
-    console.log('clickCoinHandler fired')
     return topSection 
         ? () => {removeCoin(coinKey)}
         : () => {addCoin(coinKey)}
@@ -14,7 +13,7 @@ function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
 
 const CoinTitle = styled.div`
  font-size: var(--mx);
- font-weight: 500;
+ font-weight: 700;
 `
 export const CoinTile = styled(SelectableTile)`
     position: relative;
@@ -25,31 +24,34 @@ export const CoinTile = styled(SelectableTile)`
         opacity: 0.3;
         pointer-events: none;
     `)}
+    transition: ease .2s all;
     /* opacity: ${props => props.disabled ? '0.5' : '1'}; */
 
+    &:after {
+        position: absolute;
+        border-radius: var(--radius);
+        bottom: var(--xs);
+        right: var(--xs);
+        height: var(--m);
+        width: var(--m);
+        color: var(--color-text-negative);
+        font-size: var(--m);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: ${props => props.remove ? '"X"' : '"✓"'};
+        padding: var(--s);
+        background: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'};
+        opacity: 0;
+        transition: ease .2s all;
+
+    }
         &:hover {
 
-            border-color: ${props => props.remove ? 'var(--color-danger-dark)' : 'var(--color-success-dark)'};
+            border-color: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'};
             /* background: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'}; */
-
         &:after {
-            position: absolute;
-            border-radius: var(--radius);
-            bottom: var(--xs);
-            right: var(--xs);
-            height: var(--m);
-            width: var(--m);
-            color: var(--color-text-negative);
-            font-size: var(--m);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            content: ${props => props.remove ? '"x"' : '"✓"'};
-            padding: var(--s);
-            background: ${props => props.remove ? 'var(--color-danger-dark)' : 'var(--color-success-dark)'};
-
-
+            opacity: 1;
         }
     }
 `
