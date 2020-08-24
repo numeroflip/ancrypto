@@ -15,18 +15,27 @@ const Grid = styled.div`
 
 `
 
-function displayCoins(coinList, topSection, favourites) {
+function getLowerSectionCoins(coinList, filteredCoins) {
+    let allLength = Object.keys(coinList).length;
+    let randIndex = Math.floor(Math.random() * (allLength-100))
+    return (Object.keys(filteredCoins).length > 0) 
+        ? Object.keys(filteredCoins).slice(0, 100)
+        : Object.keys(coinList).slice(randIndex, randIndex + 100)
+}
+
+function displayCoins(coinList, topSection, favourites, filteredCoins) {
+    console.log(filteredCoins)
     const KeyList = topSection 
         ? favourites 
-        : Object.keys(coinList).slice(0, 100)
+        : getLowerSectionCoins(coinList, filteredCoins)
 
     return KeyList.map((coinKey, i) => {
 
         return topSection 
-        ? <CoinTile topSection remove  key={i} coinKey={coinKey} /> 
+        ? <CoinTile topSection remove  key={`${coinKey}GZDN`} coinKey={coinKey} /> 
         :  favourites.includes(coinKey)
-            ? <CoinTile disabled={true}  key={i} coinKey={coinKey} />
-            : <CoinTile key={i} coinKey={coinKey} />
+            ? <CoinTile disabled={true}  key={`${coinKey}BRGGD`} coinKey={coinKey} />
+            : <CoinTile key={`${coinKey}DRMKL`} coinKey={coinKey} />
     })
 
 }
@@ -34,9 +43,9 @@ function displayCoins(coinList, topSection, favourites) {
 export default function CoinGrid({topSection}) {
     return (
         <AppContext.Consumer>
-            {({ coinList, favourites }) => 
+            {({ coinList, favourites, filteredCoins }) => 
             <Grid>
-                {displayCoins( coinList, topSection, favourites )}
+                {displayCoins( coinList, topSection, favourites, filteredCoins )}
             </Grid>}
         </AppContext.Consumer>
     )

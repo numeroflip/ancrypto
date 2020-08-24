@@ -1,8 +1,10 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { breakPoints } from '../Shared/GlobalTheme'
+import fuzzy from 'fuzzy'
+import { AppContext } from '../App/AppProvider'
+import _ from 'lodash'
 
-console.log(breakPoints)
 
 const Title = styled.h2`
     color: var(--color-main-darker);
@@ -36,18 +38,60 @@ const SearchInput = styled.input`
     }
 `
 
+
+const handleFilter = _.debounce((userQuery, coinList, setFilteredCoins) => {
+
+    if (!userQuery) {setFilteredCoins([]); return null}
+//  Get all the coin symbols
+    const coinSymbols = Object.keys(coinList)
+// // Get all the coin names and map symbol to name
+
+    const coinNames = coinSymbols.map(sym => coinList[sym].CoinName)
+    let allStringsToSearch = coinSymbols.concat(coinNames) // A list of both symbols and names to search  
+    let fuzzyResults = fuzzy
+        .filter(userQuery, allStringsToSearch, {})
+        .map(result => result.string)
+
+    let filteredCoins = _.pickBy(coinList, (result, symkey) => {
+        let coinName = result.CoinName;
+        return fuzzyResults.includes(symkey) || fuzzyResults.includes(coinName)
+        })
+    setFilteredCoins(filteredCoins);
+    
+
+}, 500)
+
+
+function filterCoins(e, setFilteredCoins, coinList) {
+    const userQuery = e.target.value;
+    handleFilter(userQuery, coinList, setFilteredCoins);
+}
+
+
+
+
+
+
+
 const Search = () => {
+        
     return (
-        <>
-            <Form>
-                <Title>Search</Title>
-                <SearchInput
-                    name="searc"
-                    placeholder="search"
-                    onChange={(e) => {console.log(e.target.value)}}
-                    />
-            </Form>
-        </>
+        <AppContext.Consumer>
+            {({setFilteredCoins, coinList}) => {
+                return(
+                    <Form>
+                        <Title>Search</Title>
+                        <SearchInput
+                            onKeyUp={(e) => filterCoins(e, setFilteredCoins, coinList)}
+                            name="searc"
+                            placeholder="search"
+                            />
+                    </Form>
+
+                )
+            }
+            }
+        </AppContext.Consumer>
 
     
     )

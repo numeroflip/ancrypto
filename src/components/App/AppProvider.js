@@ -7,17 +7,18 @@ const MAX_FAVOURITES = 10;
 
 export default ({children}) => {
 
+    // ==============STATE========================
+    const [page, setPage] = useState('settings');
+    const [firstVisit, setFirstVisit] = useState(localStorage.getItem('ancrypto') ? false : true)
+    const [favourites, setFavourites] = useState(firstVisit ? [] : getFavsFromLocal());
+    const [coinList, setCoinList] = useState(null)
+    const [filteredCoins, setFilteredCoins] = useState([])
+    
     function getFavsFromLocal() {
         let data = JSON.parse(localStorage.getItem('ancrypto'))
         let favs = data.favourites;
         return favs ? favs : []
     }
-    
-    const [page, setPage] = useState('settings');
-    const [firstVisit, setFirstVisit] = useState(localStorage.getItem('ancrypto') ? false : true)
-    const [favourites, setFavourites] = useState(firstVisit ? [] : getFavsFromLocal());
-    const [coinList, setCoinList] = useState(null)
-    
     
     const fetchCoins = async () => {
         let coins = await cc.coinList()
@@ -41,7 +42,6 @@ export default ({children}) => {
     useEffect( () => {
             fetchCoins()
             .then(coins => setCoinList(coins))
-      
     }, [])
 
 
@@ -68,6 +68,8 @@ export default ({children}) => {
             favourites,
             isInFavourites,
             setFavourites, 
+            filteredCoins,
+            setFilteredCoins,
             addCoin, 
             removeCoin, 
             firstVisit

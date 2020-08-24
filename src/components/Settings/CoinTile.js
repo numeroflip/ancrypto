@@ -12,8 +12,9 @@ function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
 }
 
 const CoinTitle = styled.div`
- font-size: var(--mx);
- font-weight: 700;
+    overflow: hidden;
+    font-size: var(--m);
+    font-weight: 700;
 `
 export const CoinTile = styled(SelectableTile)`
     position: relative;
