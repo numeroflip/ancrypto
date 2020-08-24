@@ -1,6 +1,6 @@
 import {createGlobalStyle} from 'styled-components'
 
-const breakpoints = {
+export const breakpoints = {
   desktop: '1024px',
   tablet: '800px',
   mobile: '600px'
@@ -13,6 +13,7 @@ export default createGlobalStyle`
     --xs: .2rem;
     --s: .5rem;
     --m: 1rem;
+    --mx: 1.25rem;
     --l: 1.5rem;
     --xl: 2rem;
     --xxl: 3rem;
@@ -30,8 +31,8 @@ export default createGlobalStyle`
     --color-main: #6cc1e1;
     --color-main-dark: #3486dd;
     --color-main-darker: #235f9f;
-    --color-background: white;
-    --color-text: black;
+    --color-background: #fff;
+    --color-text: #000;
     --color-text-secondary: gray;
     --color-text-negative: white;
     --color-background: white;

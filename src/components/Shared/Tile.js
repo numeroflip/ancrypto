@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
 export const Tile = styled.div`
+    border: 0;
+    outline: 0;
+    background: transparent;
     position: relative;
     padding: var(--m);
     /* background: var(--color-main-lighter); */

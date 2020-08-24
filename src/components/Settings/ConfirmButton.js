@@ -29,8 +29,8 @@ export default function () {
     return(
        
         <AppContext.Consumer>
-            {({favourites, confirmFavourites}) => 
-            <ConfirmButton onClick={confirmFavourites}>Confirm Favourites {favourites}</ConfirmButton>
+            {({setFavourites}) => 
+            <ConfirmButton >Confirm Favourites</ConfirmButton>
             }
         </AppContext.Consumer>
  

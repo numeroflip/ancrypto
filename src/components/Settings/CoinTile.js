@@ -5,9 +5,15 @@ import styled, { css } from 'styled-components'
 import { AppContext } from '../App/AppProvider'
 import CoinImage from '../Shared/CoinImage'
 
+function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
+    console.log('clickCoinHandler fired')
+    return topSection 
+        ? () => {removeCoin(coinKey)}
+        : () => {addCoin(coinKey)}
+}
 
 const CoinTitle = styled.div`
- font-size: 1.3rem;
+ font-size: var(--mx);
  font-weight: 500;
 `
 export const CoinTile = styled(SelectableTile)`
@@ -15,6 +21,11 @@ export const CoinTile = styled(SelectableTile)`
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
+    ${props => props.disabled && (css`
+        opacity: 0.3;
+        pointer-events: none;
+    `)}
+    /* opacity: ${props => props.disabled ? '0.5' : '1'}; */
 
         &:hover {
 
@@ -45,18 +56,18 @@ export const CoinTile = styled(SelectableTile)`
 
 const MetaWrapper = styled.div`
     margin-left: var(--m);
-`
+    text-align: left;
+    vertical-align: center;
+    `
 
 
-export default function({coinKey, remove}) {
+export default function({coinKey, remove, topSection, disabled}) {
     return (
         <AppContext.Consumer>
-            {({coinList}) => {
+            {({coinList, addCoin, removeCoin}) => {
                 const coin = coinList[coinKey]
-                console.log(coinList)
-                console.log('coinKey', coinKey)
                 return (
-                    <CoinTile remove={remove || false} url={coin.imageUrl} name={coin.CoinName} symbol={coin.Symbol}>
+                    <CoinTile as="button" disabled={disabled} onClick={clickCoinHandler(topSection, coinKey, addCoin, removeCoin, )} remove={remove || false} url={coin.imageUrl} name={coin.CoinName} symbol={coin.Symbol}>
                         <CoinImage coin={coin} />
                             <MetaWrapper>
                                 <CoinTitle>{coin.CoinName}</CoinTitle>

@@ -2,28 +2,40 @@ import React from 'react'
 import styled from 'styled-components'
 import { AppContext } from '../App/AppProvider'
 import CoinTile from './CoinTile'
+
+
 const Grid = styled.div`
     margin: var(--xl) auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
+    grid-template-columns: repeat(auto-fill, minmax(200px, .8fr));
     justify-content: center;
     grid-gap: 1rem;
     align-items: center;
 
 `
 
+function displayCoins(coinList, topSection, favourites) {
+    const KeyList = topSection 
+        ? favourites 
+        : Object.keys(coinList).slice(0, 100)
+
+    return KeyList.map((coinKey, i) => {
+
+        return topSection 
+        ? <CoinTile topSection remove  key={i} coinKey={coinKey} /> 
+        :  favourites.includes(coinKey)
+            ? <CoinTile disabled={true}  key={i} coinKey={coinKey} />
+            : <CoinTile key={i} coinKey={coinKey} />
+    })
+
+}
+
 export default function CoinGrid({topSection}) {
-    const count = topSection ? 10 : 100
     return (
         <AppContext.Consumer>
-            {({ coinList }) => 
+            {({ coinList, favourites }) => 
             <Grid>
-                {Object.keys(coinList).slice(0, count).map((coinKey, i) => 
-                    topSection
-                        ? <CoinTile remove  key={i} coinKey={coinKey} />
-                        : <CoinTile  key={i} coinKey={coinKey} />
-                    
-                )}
+                {displayCoins( coinList, topSection, favourites )}
             </Grid>}
         </AppContext.Consumer>
     )
