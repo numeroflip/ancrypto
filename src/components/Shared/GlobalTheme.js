@@ -18,9 +18,13 @@ export default createGlobalStyle`
     --xxl: 3rem;
 
     /* Colors */
-    --color-success: #7aee97d9;
-    --color-success-dark: #33e35fd9;
-    --color-danger: #f7846a;
+    --color-success: #5be37ed9;
+    --color-success-dark: #32c857d9;
+
+    --color-danger-lighter: #fdd;
+    --color-danger-light: #ffb3b3;
+    --color-danger: #ff6060;
+    --color-danger-dark: #f03535;
     --color-main-lighter: #ebf9ff;
     --color-main-light: #d1f0ff;
     --color-main: #6cc1e1;
@@ -37,7 +41,7 @@ export default createGlobalStyle`
     /* Typography */
     --font-family: 'Fira Sans', sans-serif;
     /* Shadow */
-    --shadow: 1px 1px 5px rgba(0,0,0, 0.2);
+    --shadow: 1px 4px 5px rgba(0,0,0, 0.1);
 
     --radius: 10rem;
 

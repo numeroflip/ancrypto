@@ -1,33 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import { AppContext } from '../App/AppProvider'
-import { SelectableTile } from '../Shared/Tile'
-
+import CoinTile from './CoinTile'
 const Grid = styled.div`
+    margin: var(--xl) auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
+    justify-content: center;
     grid-gap: 1rem;
-`
-const AddTile = styled(SelectableTile)`
-    &:hover {
-        border-color: var(--color-success-dark);
-        background: linear-gradient(to bottom right, #7aee9766, #7aee9766)
+    align-items: center;
 
-    }
 `
 
-const RemTile = styled(SelectableTile)`
-    &:hover {
-        border-color: var(--color-danger);
-        background: linear-gradient(to top left, transparent, red)
-    }
-`
-export default function CoinGrid() {
+export default function CoinGrid({topSection}) {
+    const count = topSection ? 10 : 100
     return (
         <AppContext.Consumer>
             {({ coinList }) => 
             <Grid>
-                {Object.keys(coinList).slice(0,100).map((key, i) => <AddTile key={i}>{key}</AddTile>)}
+                {Object.keys(coinList).slice(0, count).map((coinKey, i) => 
+                    topSection
+                        ? <CoinTile remove  key={i} coinKey={coinKey} />
+                        : <CoinTile  key={i} coinKey={coinKey} />
+                    
+                )}
             </Grid>}
         </AppContext.Consumer>
     )
