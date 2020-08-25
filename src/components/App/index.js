@@ -6,16 +6,22 @@ import Settings from '../Settings'
 import Content from '../Shared/Content'
 import GlobalTheme from '../Shared/GlobalTheme'
 
-export default function App () {
+const App = React.memo(() => (
+  <>
+    <AppBar />
+    <Content>
+      <Settings />
+    </Content>
+  </>
+))
+
+export default function () {
 
   return (
     <AppLayout>
       <GlobalTheme />
       <AppProvider>
-        <AppBar />
-        <Content>
-          <Settings />
-        </Content>
+        <App />
       </AppProvider>
     </AppLayout>
 

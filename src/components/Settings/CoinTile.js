@@ -36,11 +36,11 @@ export const CoinTile = styled(SelectableTile)`
         height: var(--m);
         width: var(--m);
         color: var(--color-text-negative);
-        font-size: var(--m);
+        font-size: ${props => props.remove ? 'var(--m)' : 'var(--l)'};
         display: flex;
         align-items: center;
         justify-content: center;
-        content: ${props => props.remove ? '"X"' : '"✓"'};
+        content: ${props => props.remove ? '"X"' : '"+"'};
         padding: var(--s);
         background: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'};
         opacity: 0;
