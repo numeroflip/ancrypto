@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { AppContext } from '../App/AppProvider'
 import CoinTile from './CoinTile'
@@ -41,12 +41,12 @@ function displayCoins(coinList, topSection, favourites, filteredCoins) {
 }
 
 export default function CoinGrid({topSection}) {
+
+    const { coinList, favourites, filteredCoins } = useContext(AppContext);
+
     return (
-        <AppContext.Consumer>
-            {({ coinList, favourites, filteredCoins }) => 
-            <Grid>
-                {displayCoins( coinList, topSection, favourites, filteredCoins )}
-            </Grid>}
-        </AppContext.Consumer>
+        <Grid>
+            {displayCoins( coinList, topSection, favourites, filteredCoins )}
+        </Grid>
     )
 }

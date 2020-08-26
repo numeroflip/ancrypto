@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { AppContext } from './AppProvider'
 
@@ -21,17 +21,16 @@ const Logo = styled.span`
 `
 
 function ControlButton({name}) {
+    const { page, setPage } = useContext(AppContext);
     return (
-        <AppContext.Consumer>
-            {({page, setPage}) => (
-                <ControlBtnElem
-                    active={page === name}
-                    onClick={() => setPage(name)}
-                >
-                    {name}
-                </ControlBtnElem>
-            )}
-        </AppContext.Consumer>
+
+        <ControlBtnElem
+            active={page === name}
+            onClick={() => setPage(name)}
+            >
+            {name}
+        </ControlBtnElem>
+
     )
 }
 

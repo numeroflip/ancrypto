@@ -1,5 +1,5 @@
 import { SelectableTile } from '../Shared/Tile'
-import React from 'react'
+import React, { useContext } from 'react'
 import CoinSymbol from './CoinSymbol'
 import styled, { css } from 'styled-components'
 import { AppContext } from '../App/AppProvider'
@@ -65,20 +65,21 @@ const MetaWrapper = styled.div`
 
 
 export default function({coinKey, remove, topSection, disabled}) {
+
+    const { coinList, addCoin, removeCoin } = useContext(AppContext)
+    const coin = coinList[coinKey]
+
     return (
-        <AppContext.Consumer>
-            {({coinList, addCoin, removeCoin}) => {
-                const coin = coinList[coinKey]
-                return (
-                    <CoinTile as="button" disabled={disabled} onClick={clickCoinHandler(topSection, coinKey, addCoin, removeCoin, )} remove={remove || false} url={coin.imageUrl} name={coin.CoinName} symbol={coin.Symbol}>
-                        <CoinImage coin={coin} />
-                            <MetaWrapper>
-                                <CoinTitle>{coin.CoinName}</CoinTitle>
-                                <CoinSymbol>{coin.Symbol}</CoinSymbol>
-                            </MetaWrapper>
-                    </CoinTile>
-                )
-            }}
-        </AppContext.Consumer>
+                
+        <CoinTile as="button" disabled={disabled} onClick={clickCoinHandler(topSection, coinKey, addCoin, removeCoin, )} remove={remove || false} url={coin.imageUrl} name={coin.CoinName} symbol={coin.Symbol}>
+            <CoinImage coin={coin} />
+                <MetaWrapper>
+                    <CoinTitle>{coin.CoinName}</CoinTitle>
+                    <CoinSymbol>{coin.Symbol}</CoinSymbol>
+                </MetaWrapper>
+        </CoinTile>
+                
+            
+
     )
 };

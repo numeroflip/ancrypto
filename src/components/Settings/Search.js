@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useState, useCallback, useEffect, useRef } from 'react'
+import React, { useContext } from 'react'
 import { breakPoints } from '../Shared/GlobalTheme'
 import fuzzy from 'fuzzy'
 import { AppContext } from '../App/AppProvider'
@@ -74,26 +74,17 @@ function filterCoins(e, setFilteredCoins, coinList) {
 
 
 const Search = () => {
+    const { setFilteredCoins, coinList } = useContext(AppContext)
         
     return (
-        <AppContext.Consumer>
-            {({setFilteredCoins, coinList}) => {
-                return(
-                    <Form>
-                        <Title>Search</Title>
-                        <SearchInput
-                            onKeyUp={(e) => filterCoins(e, setFilteredCoins, coinList)}
-                            name="searc"
-                            placeholder="search"
-                            />
-                    </Form>
-
-                )
-            }
-            }
-        </AppContext.Consumer>
-
-    
+        <Form>
+            <Title>Search</Title>
+            <SearchInput
+                onKeyUp={(e) => filterCoins(e, setFilteredCoins, coinList)}
+                name="searc"
+                placeholder="search"
+                />
+        </Form>
     )
 }
 
