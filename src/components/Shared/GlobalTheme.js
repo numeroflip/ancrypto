@@ -19,9 +19,11 @@ export default createGlobalStyle`
     --xl: 2rem;
     --xxl: 3rem;
 
+    --max-width: 1200px;
+
     /* Colors */
     --color-success: #5be37ed9;
-    --color-success-dark: #32c857d9;
+    --color-success-dark:#2fb34f;
 
     --color-danger-lighter: #fdd;
     --color-danger-light: #ffb3b3;

@@ -5,7 +5,7 @@ import CoinTile from './CoinTile'
 
 
 const Grid = styled.div`
-    max-width: 1200px; 
+    max-width: var(--max-width);
     margin: var(--xl) auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, .8fr));
@@ -17,14 +17,12 @@ const Grid = styled.div`
 
 function getLowerSectionCoins(coinList, filteredCoins) {
     let allLength = Object.keys(coinList).length;
-    let randIndex = Math.floor(Math.random() * (allLength-100))
     return (Object.keys(filteredCoins).length > 0) 
         ? Object.keys(filteredCoins).slice(0, 100)
-        : Object.keys(coinList).slice(randIndex, randIndex + 100)
+        : coinList.slice(0, 100)
 }
 
 function displayCoins(coinList, topSection, favourites, filteredCoins) {
-    console.log(filteredCoins)
     const KeyList = topSection 
         ? favourites 
         : getLowerSectionCoins(coinList, filteredCoins)
@@ -40,13 +38,13 @@ function displayCoins(coinList, topSection, favourites, filteredCoins) {
 
 }
 
-export default function CoinGrid({topSection}) {
+export default function CoinGrid({topSection, sortedCoins}) {
 
-    const { coinList, favourites, filteredCoins } = useContext(DataContext);
+    const {  favourites, filteredCoins } = useContext(DataContext);
 
     return (
         <Grid>
-            {displayCoins( coinList, topSection, favourites, filteredCoins )}
+            {displayCoins( sortedCoins, topSection, favourites, filteredCoins )}
         </Grid>
     )
 }

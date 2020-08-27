@@ -25,7 +25,6 @@ export const CoinTile = styled(SelectableTile)`
         opacity: 0.3;
         pointer-events: none;
     `)}
-    transition: ease .2s all;
     /* opacity: ${props => props.disabled ? '0.5' : '1'}; */
 
     &:after {
@@ -49,7 +48,7 @@ export const CoinTile = styled(SelectableTile)`
     }
         &:hover {
 
-            border-color: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'};
+            border-color: ${props => props.remove && 'var(--color-danger)' };
             /* background: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'}; */
         &:after {
             opacity: 1;
