@@ -41,7 +41,7 @@ const SearchInput = styled.input`
 
 const handleFilter = _.debounce((userQuery, coinList, setFilteredCoins) => {
 
-    if (!userQuery) {setFilteredCoins([]); return null}
+    if (!userQuery ) {setFilteredCoins([]); console.log('FilteredCoins are set from Search-----:M:M:M:M'); return null}
 //  Get all the coin symbols
     const coinSymbols = Object.keys(coinList)
 // // Get all the coin names and map symbol to name

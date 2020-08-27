@@ -5,11 +5,11 @@ import * as serviceWorker from './serviceWorker';
 import AppProvider from './components/App/AppProvider'
 
 ReactDOM.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <AppProvider>
       <App />
     </AppProvider>,
-  // </React.StrictMode>,
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

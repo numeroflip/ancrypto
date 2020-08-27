@@ -24,7 +24,6 @@ function getLowerSectionCoins(coinList, filteredCoins) {
 }
 
 function displayCoins(coinList, topSection, favourites, filteredCoins) {
-    console.log(filteredCoins)
     const KeyList = topSection 
         ? favourites 
         : getLowerSectionCoins(coinList, filteredCoins)
