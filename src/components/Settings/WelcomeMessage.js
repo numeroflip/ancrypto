@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { AppContext } from '../App/AppProvider'
+import { DataContext } from '../contexts'
 
 export default function () {
 
-    const { firstVisit } = useContext(AppContext)
+    const { firstVisit } = useContext(DataContext)
     
     return firstVisit 
         ? <h1>Welcome to Ancrypto. Select your favourite coins to begin.</h1>

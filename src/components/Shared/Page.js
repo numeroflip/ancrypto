@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import {AppContext} from '../App/AppProvider'
+import {DataContext} from '../contexts'
 
 export default function ({name, children}) {
 
-    const { page } = useContext(AppContext)
+    const { page } = useContext(DataContext)
 
     return  page === name
         ? <div>{children}</div>

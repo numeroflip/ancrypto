@@ -2,7 +2,7 @@ import { SelectableTile } from '../Shared/Tile'
 import React, { useContext } from 'react'
 import CoinSymbol from './CoinSymbol'
 import styled, { css } from 'styled-components'
-import { AppContext } from '../App/AppProvider'
+import { DataContext } from '../contexts'
 import CoinImage from '../Shared/CoinImage'
 
 function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
@@ -66,7 +66,7 @@ const MetaWrapper = styled.div`
 
 export default function({coinKey, remove, topSection, disabled}) {
 
-    const { coinList, addCoin, removeCoin } = useContext(AppContext)
+    const { coinList, addCoin, removeCoin } = useContext(DataContext)
     const coin = coinList[coinKey]
 
     return (

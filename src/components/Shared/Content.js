@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { AppContext } from '../App/AppProvider'
+import { DataContext } from '../contexts'
 
 export default ({children}) => {
 
-    const { coinList } = useContext(AppContext)
+    const { coinList } = useContext(DataContext)
 
     return !coinList 
         ? <div>Loading Coins...</div>

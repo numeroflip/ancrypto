@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import React, { useContext } from 'react'
 import { breakPoints } from '../Shared/GlobalTheme'
 import fuzzy from 'fuzzy'
-import { AppContext } from '../App/AppProvider'
+import { DataContext } from '../contexts'
 import _ from 'lodash'
 
 
@@ -74,7 +74,7 @@ function filterCoins(e, setFilteredCoins, coinList) {
 
 
 const Search = () => {
-    const { setFilteredCoins, coinList } = useContext(AppContext)
+    const { setFilteredCoins, coinList } = useContext(DataContext)
         
     return (
         <Form>

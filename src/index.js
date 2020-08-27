@@ -2,14 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-import AppProvider from './components/App/AppProvider'
+import ContextProvider from './components/contexts/state'
+import GlobalTheme from './components/Shared/GlobalTheme'
+
 
 ReactDOM.render(
-  // <React.StrictMode>
-    <AppProvider>
+  <React.StrictMode>
+    <ContextProvider>
+      <GlobalTheme />
       <App />
-    </AppProvider>,
-  // </React.StrictMode>,
+    </ContextProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

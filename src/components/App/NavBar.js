@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
-import { AppContext } from './AppProvider'
+import { DataContext } from '../contexts'
 
 const Bar = styled.div`
     display: grid;
@@ -21,7 +21,7 @@ const Logo = styled.span`
 `
 
 function ControlButton({name}) {
-    const { page, setPage } = useContext(AppContext);
+    const { page, setPage } = useContext(DataContext);
     return (
 
         <ControlBtnElem
