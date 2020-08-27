@@ -36,7 +36,10 @@ export const DataProvider = ({children}) => {
   }
 
   // Write favourites into localstorage
-  useEffect(() => updateFavsInLocalStorage(favourites), [favourites])
+  useEffect(() => {
+    updateFavsInLocalStorage(favourites)
+    setCurrFavourite(favourites[0])
+  }, [favourites])
 
   // Fetch Coin data at startup
   useEffect(() => {
@@ -77,15 +80,11 @@ export const DataProvider = ({children}) => {
     updatePrices(favourites) 
   },[favourites])
 
-
-
-  const isInFavourites = (coinKey) => {
-    return favourites.includes(coinKey)
-  } 
-
   const removeCoin = coinKey => {
     setFavourites(favourites.filter(key => key !== coinKey))
   }
+
+
 
   return (
   <DataContext.Provider value={
@@ -94,8 +93,9 @@ export const DataProvider = ({children}) => {
       coinList,
       setPage, 
       favourites,
-      isInFavourites,
-      setFavourites, 
+      setFavourites,
+      currFavourite,
+      setCurrFavourite, 
       filteredCoins,
       setFilteredCoins,
       addCoin, 

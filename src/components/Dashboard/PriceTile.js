@@ -1,27 +1,39 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled, {css} from 'styled-components'
 import {SelectableTile} from '../Shared'
+import { DataContext } from '../contexts'
 
-const numFormat = number => {
-  return +(String(number)).slice(0, 7)
+const numFormat = (number, precision = 7) => {
+  return (String(number)).slice(0, precision)
 }
 
 const PriceTileStyled = styled(SelectableTile)`
 
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: center;
+  width: 100%;
 
   ${props => props.compact && css`
     font-size: var(--l);
   `}
+
+  ${props => props.currFavourite && css`
+    pointer-events: none;
+    box-shadow: var(--shadow);
+    border-color: var(--color-main-dark);
+  `}
 `
 
 const Price = styled.div`
+  justify-self: start;
+
   font-size: var(--l);
   font-weight: 700;
 `
 
 const ChangePct = styled.div`
+  font-size: var(--m);
   justify-self: end;
   color: var(--color-success-dark);
 
@@ -32,19 +44,22 @@ const ChangePct = styled.div`
 `
 
 const Symbol = styled.div`
+  justify-self: start;
   font-size: var(--m);
   font-weight: 700;
 `
 
-const PriceTile = ({priceObj, index}) => {
+  const PriceTile = ({priceObj, index}) => {
+
   const sym = Object.keys(priceObj)[0]
   const data = priceObj[sym]['USD']
 
-  return (
-    <PriceTileStyled compact={index < 4}>
-      <Symbol>{sym}</Symbol>
+  const {currFavourite, setCurrFavourite} = useContext(DataContext)
 
-      <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{numFormat(data.CHANGEPCT24HOUR)}%</ChangePct>
+  return (
+    <PriceTileStyled as='button' onClick={() => setCurrFavourite(sym)} currFavourite={sym === currFavourite} compact={index < 4}>
+      <Symbol>{sym}</Symbol>
+      <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{numFormat(data.CHANGEPCT24HOUR, 5)}%</ChangePct>
       <Price>&#36;{numFormat(data.PRICE)}</Price>
     </PriceTileStyled>
   )

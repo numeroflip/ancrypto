@@ -9,11 +9,12 @@ export const Tile = styled.div`
     padding: var(--m);
     /* background: var(--color-main-lighter); */
     /* border-radius: var(--radius); */
-    border-radius: 0 1rem 1rem 0;
+    border-radius: 1rem;
     color: var(--color-text);
 
 `
 export const SelectableTile = styled(Tile)`
+    border: 0 ;
     transition: ease .2s all;
     border-left: 10px solid transparent; 
     &:hover {

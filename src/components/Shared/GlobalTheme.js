@@ -23,7 +23,7 @@ export default createGlobalStyle`
 
     /* Colors */
     --color-success: #5be37ed9;
-    --color-success-dark:#2fb34f;
+    --color-success-dark:#25aa45;
 
     --color-danger-lighter: #fdd;
     --color-danger-light: #ffb3b3;
@@ -46,7 +46,7 @@ export default createGlobalStyle`
     /* Typography */
     --font-family: 'Fira Sans', sans-serif;
     /* Shadow */
-    --shadow: 1px 4px 5px rgba(0,0,0, 0.1);
+    --shadow: 1px 4px 14px rgba(0,0,0, 0.1);
 
     --radius: 10rem;
 
