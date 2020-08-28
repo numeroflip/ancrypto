@@ -13,6 +13,7 @@ const PriceGrid = styled.div`
   align-items: center;
 `
 
+
 export default function () {
   const { prices } = useContext(DataContext)
 

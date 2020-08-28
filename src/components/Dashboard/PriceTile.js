@@ -3,8 +3,21 @@ import styled, {css} from 'styled-components'
 import {SelectableTile} from '../Shared'
 import { DataContext } from '../contexts'
 
-const numFormat = (number, precision = 7) => {
-  return (String(number)).slice(0, precision)
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 5
+});
+
+
+
+const numFormat = (number) => {
+  // return +number.toPrecision(precision)
+  return formatter.format(number)
+}
+const percFormat = (percent) => {
+  return Math.round(percent.toFixed(3)*1000)/1000
+
 }
 
 const PriceTileStyled = styled(SelectableTile)`
@@ -62,8 +75,8 @@ const PriceTile = ({priceObj, index}) => {
   return (
     <PriceTileStyled as='button' onClick={() => setCurrFavourite(sym)} currFavourite={sym === currFavourite} compact={index < 4}>
       <Symbol>{sym}</Symbol>
-      <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{numFormat(data.CHANGEPCT24HOUR, 5)}%</ChangePct>
-      <Price>&#36;{numFormat(data.PRICE)}</Price>
+      <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{percFormat(data.CHANGEPCT24HOUR)}%</ChangePct>
+      <Price>{numFormat(data.PRICE)}</Price>
     </PriceTileStyled>
   )
 

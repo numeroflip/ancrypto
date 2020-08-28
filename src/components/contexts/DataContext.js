@@ -32,23 +32,6 @@ export const DataProvider = ({children}) => {
   const [filteredCoins, setFilteredCoins] = useState([])
   const [prices, setPrices] = useState(null);
 
-
- 
-
-
- 
-    // if (!favourites.length) {setCurrFavourite([])} {
-    // localStorage.setItem('ancrypto', JSON.stringify({favourites, currFavourite}))
-    // }
-
-  // Write favourites into localstorage
- 
-
-  // useEffect(() => {
-  //   if ((!favourites.includes(currFavourite)) && (favourites.length > 0)) {
-  //     setCurrFavourite(favourites[0])}
-  // },[favourites])
-
   // Fetch Coin data at startup
   useEffect(() => {
     const fetchCoins = async () => {

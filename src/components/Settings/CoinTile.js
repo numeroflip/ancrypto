@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import CoinSymbol from './CoinSymbol'
 import styled, { css } from 'styled-components'
 import { DataContext } from '../contexts'
-import CoinImage from '../Shared/CoinImage'
+import { CoinImage } from '../Shared/CoinImage'
 
 function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
     return topSection 
