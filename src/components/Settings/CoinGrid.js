@@ -16,7 +16,6 @@ const Grid = styled.div`
 `
 
 function getLowerSectionCoins(coinList, filteredCoins) {
-    let allLength = Object.keys(coinList).length;
     return (Object.keys(filteredCoins).length > 0) 
         ? Object.keys(filteredCoins).slice(0, 100)
         : coinList.slice(0, 100)
@@ -24,7 +23,7 @@ function getLowerSectionCoins(coinList, filteredCoins) {
 
 function displayCoins(coinList, topSection, favourites, filteredCoins) {
     const KeyList = topSection 
-        ? favourites 
+        ? favourites
         : getLowerSectionCoins(coinList, filteredCoins)
 
     return KeyList.map((coinKey, i) => {

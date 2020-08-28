@@ -8,38 +8,46 @@ const MAX_FAVOURITES = 10;
 
 export const DataContext = React.createContext();
 
+function getCurrFavourite(favourites) {
+  let currFavInLocal = getFromLocal('currFavourite')
+  if (currFavInLocal) {return currFavInLocal}
+  else if (favourites) {return favourites[0]}
+  else return []
+}
+
+function getFromLocal (item) {
+  let data = JSON.parse(localStorage.getItem('ancrypto'))
+  let answer = data ? data[item] : [];
+  return answer
+}
 
 export const DataProvider = ({children}) => {
 
   // ==============STATE========================
   const [page, setPage] = useState('dashboard');
   const [firstVisit, setFirstVisit] = useState(localStorage.getItem('ancrypto') ? false : true)
-  const [favourites, setFavourites] = useState(firstVisit ? [] : getFavsFromLocal());
-  const [currFavourite, setCurrFavourite] = useState(favourites.length > 0 ? favourites[0] : null)
+  const [favourites, setFavourites] = useState(firstVisit ? [] : getFromLocal('favourites'));
+  const [currFavourite, setCurrFavourite] = useState(getCurrFavourite())
   const [coinList, setCoinList] = useState(null)
   const [filteredCoins, setFilteredCoins] = useState([])
   const [prices, setPrices] = useState(null);
 
-  function getFavsFromLocal() {
-    let data = JSON.parse(localStorage.getItem('ancrypto'))
-    let favs = data.favourites;
-    return favs ? favs : []
-  }
 
-  const addCoin = coinKey => {
-    if((favourites.length < MAX_FAVOURITES ) && !favourites.includes(coinKey)) {
-      setFavourites([...favourites, coinKey]);
-    }
-  }
-  const updateFavsInLocalStorage = (favourites) => {
-    localStorage.setItem('ancrypto', JSON.stringify({favourites, currFavourite}))
-  }
+ 
+
+
+ 
+    // if (!favourites.length) {setCurrFavourite([])} {
+    // localStorage.setItem('ancrypto', JSON.stringify({favourites, currFavourite}))
+    // }
 
   // Write favourites into localstorage
-  useEffect(() => {
-    updateFavsInLocalStorage(favourites)
-    setCurrFavourite(favourites[0])
-  }, [favourites])
+ 
+
+  // useEffect(() => {
+  //   if ((!favourites.includes(currFavourite)) && (favourites.length > 0)) {
+  //     setCurrFavourite(favourites[0])}
+  // },[favourites])
 
   // Fetch Coin data at startup
   useEffect(() => {
@@ -60,7 +68,6 @@ export const DataProvider = ({children}) => {
 
   // Fetch the pices of favourites
   useEffect(() => {
-      
     const fetchPrices = async (coinsArr) => {
         
       const returnData = [];
@@ -80,8 +87,24 @@ export const DataProvider = ({children}) => {
     updatePrices(favourites) 
   },[favourites])
 
+  const addCoin = coinKey => {
+    if(currFavourite.length === 0) {setCurrFavourite(coinKey)}
+    if((favourites.length < MAX_FAVOURITES ) && !favourites.includes(coinKey)) {
+      setFavourites([...favourites, coinKey]);
+    }
+  }
+  // Handle localstorage updates
+  useEffect(() => {
+    localStorage.setItem('ancrypto', JSON.stringify({
+      favourites,
+      currFavourite
+    }))
+  },[currFavourite, favourites])
+
   const removeCoin = coinKey => {
-    setFavourites(favourites.filter(key => key !== coinKey))
+    const updatedFavs = favourites.filter(key => key !== coinKey)
+    if( favourites.includes(coinKey) ) {console.log(true, favourites, coinKey) ; setCurrFavourite(updatedFavs[0])}
+    setFavourites(updatedFavs)
   }
 
 

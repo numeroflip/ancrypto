@@ -21,7 +21,7 @@ const Settings = () => {
   const {coinList} = useContext(DataContext)
   useEffect(() => {
     sortedCoins = sortCoinList(coinList)
-  }, [])
+  }, [coinList])
     return (
         <Page name="settings">
             <WelcomeMessage />

@@ -49,12 +49,15 @@ const Symbol = styled.div`
   font-weight: 700;
 `
 
-  const PriceTile = ({priceObj, index}) => {
 
+const PriceTile = ({priceObj, index}) => {
+  
+  const {currFavourite, setCurrFavourite} = useContext(DataContext)
+  
   const sym = Object.keys(priceObj)[0]
   const data = priceObj[sym]['USD']
 
-  const {currFavourite, setCurrFavourite} = useContext(DataContext)
+
 
   return (
     <PriceTileStyled as='button' onClick={() => setCurrFavourite(sym)} currFavourite={sym === currFavourite} compact={index < 4}>
