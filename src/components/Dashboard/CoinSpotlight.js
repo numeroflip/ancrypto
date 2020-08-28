@@ -28,8 +28,9 @@ const SpotLightName = styled.h2`
 const CoinSpotlight = () => {
 
   const {currFavourite, coinList} = useContext(DataContext)
-
-  return (
+  
+  return currFavourite.length
+    ? (
   <SpotTile>
       <SpotLightName> 
         {coinList[currFavourite].CoinName}
@@ -37,6 +38,7 @@ const CoinSpotlight = () => {
       <CoinImage spotlight coin={coinList[currFavourite]} />
   </SpotTile>
   )
+  : <div>Nothing here</div>
 }
 
 export default CoinSpotlight

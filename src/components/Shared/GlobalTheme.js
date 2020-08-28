@@ -47,6 +47,7 @@ export default createGlobalStyle`
     --font-family: 'Fira Sans', sans-serif;
     /* Shadow */
     --shadow: 1px 4px 14px rgba(0,0,0, 0.1);
+    --shadow-light: 1px 2px 5px rgba(0,0,0, 0.1);
 
     --radius: 10rem;
 

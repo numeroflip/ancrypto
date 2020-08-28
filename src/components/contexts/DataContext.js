@@ -43,10 +43,10 @@ const fetchCoins = async () => {
   catch(e) {console.log(e)}
 }
 
-const historicalPromises = currFavourite => {
+const historicalPromises = (currFavourite, interval) => {
   let promises = [];
   for (let i = TIME_UNITS; i > 0; i--) {
-    const date = moment().subtract(i, 'months').toDate()
+    const date = moment().subtract(i, interval).toDate()
     promises.push(
       cc.priceHistorical(
         currFavourite, 
@@ -59,14 +59,14 @@ const historicalPromises = currFavourite => {
 
 }
 
-const fetchHistorical = async (currFavourite) => {
+const fetchHistorical = async (currFavourite, interval) => {
 
-  const results = await historicalPromises(currFavourite)
+  const results = await historicalPromises(currFavourite, interval)
   const historical = [
     {
       name: currFavourite,
       data: results.map((ticker, index) => [
-        moment().subtract(TIME_UNITS - index, 'months').valueOf(),
+        moment().subtract(TIME_UNITS - index, interval).valueOf(),
         ticker.USD
       ])
     }
@@ -85,6 +85,7 @@ export const DataProvider = ({children}) => {
   const [filteredCoins, setFilteredCoins] = useState([])
   const [prices, setPrices] = useState(null);
   const [historicalData, setHistoricalData] = useState([])
+  const [historicalInterval, setHistoricalInterval] = useState("months")
 
   // Fetch Coin data at startup
   useEffect(() => {
@@ -92,7 +93,7 @@ export const DataProvider = ({children}) => {
     const init = async () => {
       const coins = await fetchCoins()
       if (currFavourite.length > 0 ) {
-        const historical = await fetchHistorical(currFavourite)
+        const historical = await fetchHistorical(currFavourite, historicalInterval)
         setHistoricalData(historical)
       }
       setCoinList(coins)
@@ -121,15 +122,15 @@ export const DataProvider = ({children}) => {
 
   useEffect(() => {
     const updateHistoricalPrice = async () => {
-      if (currFavourite.length > 0 ) {
-        const historical = await fetchHistorical(currFavourite)
+      if (currFavourite.length) {
+        const historical = await fetchHistorical(currFavourite, historicalInterval)
         setHistoricalData(historical)
       }
     }
     setHistoricalData(null)
     updateHistoricalPrice()
 
-  }, [currFavourite])
+  }, [currFavourite, historicalInterval])
   // Handle localstorage updates
   useEffect(() => {
     localStorage.setItem('ancrypto', JSON.stringify({
@@ -155,6 +156,8 @@ export const DataProvider = ({children}) => {
       historicalData,
       favourites,
       setFavourites,
+      historicalInterval,
+      setHistoricalInterval,
       currFavourite,
       setCurrFavourite, 
       filteredCoins,
