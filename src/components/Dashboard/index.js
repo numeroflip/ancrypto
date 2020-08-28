@@ -12,6 +12,7 @@ const ChartGrid = styled.div`
   grid-gap: var(--m);
   grid-template-columns: 1fr 3fr;
   align-items: center;
+  justify-content: center;
 `
 
 

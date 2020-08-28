@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import cc from 'cryptocompare'
+import moment from 'moment'
 
 
 cc.setApiKey('6bce00cebd36b06c07f20e0e94c2a0fe1b0211dc0a8a8dc030f6fb8b4117f707')
 
 const MAX_FAVOURITES = 10;
+const TIME_UNITS = 10; 
 
 export const DataContext = React.createContext();
 
@@ -21,6 +23,57 @@ function getFromLocal (item) {
   return answer
 }
 
+const fetchPrices = async (coinsArr) => {
+        
+  const returnData = [];
+  coinsArr.forEach(async (coin) => {
+    try {
+        let priceData = await cc.priceFull(coin, 'USD');
+        returnData.push(priceData)
+    } catch(e) { console.error('Fetch price error: ', e) }
+  })
+  return returnData
+    
+}
+
+const fetchCoins = async () => {
+  let coins = await cc.coinList()
+  coins = coins.Data
+  try {return coins}
+  catch(e) {console.log(e)}
+}
+
+const historicalPromises = currFavourite => {
+  let promises = [];
+  for (let i = TIME_UNITS; i > 0; i--) {
+    const date = moment().subtract(i, 'months').toDate()
+    promises.push(
+      cc.priceHistorical(
+        currFavourite, 
+        ['USD'], 
+        date
+    ))
+  }
+
+  return Promise.all(promises)
+
+}
+
+const fetchHistorical = async (currFavourite) => {
+
+  const results = await historicalPromises(currFavourite)
+  const historical = [
+    {
+      name: currFavourite,
+      data: results.map((ticker, index) => [
+        moment().subtract(TIME_UNITS - index, 'months').valueOf(),
+        ticker.USD
+      ])
+    }
+  ]
+  return historical
+}
+
 export const DataProvider = ({children}) => {
 
   // ==============STATE========================
@@ -31,43 +84,32 @@ export const DataProvider = ({children}) => {
   const [coinList, setCoinList] = useState(null)
   const [filteredCoins, setFilteredCoins] = useState([])
   const [prices, setPrices] = useState(null);
+  const [historicalData, setHistoricalData] = useState([])
 
   // Fetch Coin data at startup
   useEffect(() => {
-    const fetchCoins = async () => {
-      let coins = await cc.coinList()
-      coins = coins.Data
-      try {return coins}
-      catch(e) {console.log(e)}
-  }
-    const updateStateWithCoins = async () => {
+
+    const init = async () => {
       const coins = await fetchCoins()
+      if (currFavourite.length > 0 ) {
+        const historical = await fetchHistorical(currFavourite)
+        setHistoricalData(historical)
+      }
       setCoinList(coins)
     }           
-
-    updateStateWithCoins()
+    init()
 
   }, [])
 
   // Fetch the pices of favourites
   useEffect(() => {
-    const fetchPrices = async (coinsArr) => {
-        
-      const returnData = [];
-      coinsArr.forEach(async (coin) => {
-        try {
-            let priceData = await cc.priceFull(coin, 'USD');
-            returnData.push(priceData)
-        } catch(e) { console.error('Fetch price error: ', e) }
-      })
-      return returnData
-        
-    }
+
     const updatePrices = async (coinsArr) => {
       let newPrices = await fetchPrices(coinsArr)
       setPrices(newPrices)
     }
-    updatePrices(favourites) 
+    updatePrices(favourites)
+
   },[favourites])
 
   const addCoin = coinKey => {
@@ -76,6 +118,18 @@ export const DataProvider = ({children}) => {
       setFavourites([...favourites, coinKey]);
     }
   }
+
+  useEffect(() => {
+    const updateHistoricalPrice = async () => {
+      if (currFavourite.length > 0 ) {
+        const historical = await fetchHistorical(currFavourite)
+        setHistoricalData(historical)
+      }
+    }
+    setHistoricalData(null)
+    updateHistoricalPrice()
+
+  }, [currFavourite])
   // Handle localstorage updates
   useEffect(() => {
     localStorage.setItem('ancrypto', JSON.stringify({
@@ -98,6 +152,7 @@ export const DataProvider = ({children}) => {
       page, 
       coinList,
       setPage, 
+      historicalData,
       favourites,
       setFavourites,
       currFavourite,

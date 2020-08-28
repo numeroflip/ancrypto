@@ -10,6 +10,7 @@ export const CoinImg = styled.img`
   ${props => props.spotlight && css`
     height: 15vw;
     max-height: 200px;
+    grid-row: auto;
   `}
 `
 

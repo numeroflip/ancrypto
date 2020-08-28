@@ -1,4 +1,4 @@
-export default function () {
+export default function (data) {
 
 
   return ( {
@@ -13,8 +13,10 @@ export default function () {
       }
     },
   
-    xAxis: {
-      accessibility: {
+    xAxis: 
+     {
+        type: 'datetime',
+        accessibility: {
         rangeDescription: 'Range: 2010 to 2017'
       }
     },
@@ -34,10 +36,7 @@ export default function () {
       }
     },
   
-    series: [{
-      name: 'Installation',
-      data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-    }],
+    series: data,
   
     responsive: {
       rules: [{

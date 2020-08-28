@@ -6,18 +6,22 @@ import styled from 'styled-components'
 const SpotTile = styled(Tile)`
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr;
   align-items: center;
   justify-content: center;
+  grid-template-columns: 1fr;
+
   box-shadow: var(--shadow);
   max-width: var(--max-width);
   margin: 0 auto;
 `
 
 const SpotLightName = styled.h2`
-  margin-bottom: var(--m);
+  justify-self: center;
+  margin: var(--m);
 `
+
 
 
 
