@@ -3,11 +3,12 @@ import Page from '../Shared/Page'
 import PriceGrid from './PriceGrid'
 import CoinSpotlight from './CoinSpotlight'
 import styled from 'styled-components'
+import PriceChart from './PriceChart'
 
 
 const ChartGrid = styled.div`
   display: grid;
-  margin-top: var(--l);
+  padding-top: var(--xl);
   grid-gap: var(--m);
   grid-template-columns: 1fr 3fr;
   align-items: center;
@@ -22,7 +23,7 @@ const Dashboard = () => {
       <PriceGrid />
       <ChartGrid>
         <CoinSpotlight />
-        <div>Chart goes here</div>
+        <PriceChart />
       </ChartGrid>
     </Page>
   )

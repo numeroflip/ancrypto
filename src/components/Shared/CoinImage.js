@@ -8,7 +8,8 @@ export const CoinImg = styled.img`
   height: 50px;
 
   ${props => props.spotlight && css`
-    height: 200px;
+    height: 15vw;
+    max-height: 200px;
   `}
 `
 

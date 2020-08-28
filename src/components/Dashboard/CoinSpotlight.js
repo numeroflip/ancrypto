@@ -4,6 +4,7 @@ import { DataContext } from '../contexts'
 import styled from 'styled-components'
 
 const SpotTile = styled(Tile)`
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
