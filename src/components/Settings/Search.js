@@ -27,10 +27,12 @@ const SearchInput = styled.input`
     padding: var(--m) var(--l);
     box-shadow: var(--shadow);
     border-radius: var(--radius);
+    margin: 0 auto;
     margin-bottom: var(--l);
     color: var(--color-main-darker);
     font-size: var(--mx);
     background: var(--color-background);
+    max-width: 400px;
 
     &:focus {
         border-color: var(--color-main-darker)
@@ -38,6 +40,7 @@ const SearchInput = styled.input`
 
     @media(max-width: ${breakPoints.mobile}) {
         width: 100%;
+        font-size: var(--l);
     }
 `
 

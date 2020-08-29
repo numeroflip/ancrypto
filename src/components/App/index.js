@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import AppLayout from './AppLayout'
 import NavBar from './NavBar'
 import Settings from '../Settings'
 import Dashboard from '../Dashboard/index.js'
@@ -17,20 +16,18 @@ export default function () {
   const {theme} = useContext(DataContext)
 
   return (
-    <AppLayout>
+    <Router>
       <GlobalTheme dark={theme === 'dark'} />
-      <Router>
-        <NavBar />
-        <Switch>
-          <Route exact path='/'>
-            <Dashboard />
-          </Route>
-          <Route path='/settings'>
-            <Settings />
-          </Route>
-        </Switch>
-        <Footer />
-      </Router>
-    </AppLayout>
+      <NavBar />
+      <Switch>
+        <Route exact path='/'>
+          <Dashboard />
+        </Route>
+        <Route path='/settings'>
+          <Settings />
+        </Route>
+      </Switch>
+      <Footer />
+    </Router>
   );
 }

@@ -63,11 +63,11 @@ export default createGlobalStyle`
       }
     }
 
-    @media(max-width: ${breakPoints.mobile}) {
+    /* @media(max-width: ${breakPoints.mobile}) {
       :root {
         font-size: 11px;
       }
-    }
+    } */
   }
 
   html {

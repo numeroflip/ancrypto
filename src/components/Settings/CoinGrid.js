@@ -6,7 +6,7 @@ import {breakPoints} from '../Shared'
 
 
 const Grid = styled.div`
-    max-width: var(--max-width);
+    width: 100%;
     margin: var(--xl) auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, .8fr));
@@ -31,10 +31,11 @@ function getLowerSectionCoins(coinList, filteredCoins) {
 }
 
 function displayCoins(coinList, topSection, favourites, filteredCoins) {
-    let keyList = topSection
-      ? favourites
-      : getLowerSectionCoins(coinList, filteredCoins)
 
+  let keyList = topSection 
+    ? favourites
+    : getLowerSectionCoins(coinList, filteredCoins)
+  
     return keyList.map((coinKey) => {
 
         return topSection 
@@ -43,17 +44,16 @@ function displayCoins(coinList, topSection, favourites, filteredCoins) {
               ? <CoinTile disabled={true}  key={`${coinKey}BRGGD`} coinKey={coinKey} />
               : <CoinTile key={`${coinKey}DRMKL`} coinKey={coinKey} />
     })
-
 }
 
 
 export default function CoinGrid({ topSection, filteredCoins}) {
 
-    const { favourites, sortedCoins} = useContext(DataContext);
+  const { favourites, sortedCoins} = useContext(DataContext);
 
-    return (
-        <Grid>
-            {displayCoins(sortedCoins, topSection, favourites, filteredCoins )}
-        </Grid>
-    )
+  return !favourites.length && topSection 
+    ? null
+    : <Grid>
+          {displayCoins(sortedCoins, topSection, favourites, filteredCoins )}
+      </Grid>
 }

@@ -24,10 +24,10 @@ const SpotTile = styled(Tile)`
   margin: 0 auto;
 
   @media( max-width: ${breakPoints.tablet}) {
+    width: auto;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    margin: 0;
 
   }
 `

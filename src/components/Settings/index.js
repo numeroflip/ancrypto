@@ -27,7 +27,7 @@ const Settings = () => {
       <>
         <FavouritesHeader>
           <H2>Your Favourites</H2>
-          <SubHeading>You can choose up to 10 favourites.</SubHeading>
+          <SubHeading>Choose up to 10 coins.</SubHeading>
           {!favourites.length && <EmptyText>Hmm... It looks quite empty here. Please search, or choose from the list below.</EmptyText>}
         </FavouritesHeader>
           <CoinGrid  topSection/>

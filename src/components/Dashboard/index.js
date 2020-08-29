@@ -8,6 +8,7 @@ import {H1, breakPoints} from '../Shared'
 
 
 const ChartGrid = styled.div`
+  width: 100%;
   display: grid;
   padding-top: var(--xl);
   grid-gap: var(--m);

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link, NavLink } from "react-router-dom";
 
 const Bar = styled.div`
+  width: 100%;
   color: var(--color-text);
   display: flex;
   align-items: center;
