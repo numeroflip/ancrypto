@@ -3,11 +3,9 @@ import { DataContext } from '../contexts'
 
 export default ({children}) => {
 
-  const { coinList, prices, firstVisit } = useContext(DataContext)
+  const { coinList, prices, currFavourite } = useContext(DataContext)
 
   return !coinList 
     ? <div>Loading Coins...</div>
-    : !firstVisit && !prices 
-      ? <div>Loading Prices...</div>
-      : <div>{children}</div>
+    : <div>{children}</div>
 }

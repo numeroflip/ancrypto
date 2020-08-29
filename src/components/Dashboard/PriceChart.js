@@ -23,6 +23,19 @@ const TopBar = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+const ChartWrapper = styled.div`
+  .highcharts-color-0 {
+	fill: var(--color-main-dark);
+	stroke: var(--color-main-darker);
+}
+.highcharts-color-0 text {
+
+	stroke: black;
+
+}
+
+`
 export default function () {
 
   const {historicalData, currFavourite, historicalInterval, setHistoricalInterval} = useContext(DataContext);
@@ -41,7 +54,9 @@ export default function () {
           <option value='years'>Years</option>
         </ChartSelect>
       </TopBar>
-      <ReactHighcharts config={highChartConfig(historicalData)} />
+      <ChartWrapper>
+        <ReactHighcharts config={highChartConfig(historicalData)} />
+      </ChartWrapper>
     </PriceTile>
   )
 }

@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import ContextProvider from './components/contexts/state'
-import GlobalTheme from './components/Shared/GlobalTheme'
 
 
 ReactDOM.render(
   <React.StrictMode>
     <ContextProvider>
-      <GlobalTheme />
       <App />
     </ContextProvider>
   </React.StrictMode>,

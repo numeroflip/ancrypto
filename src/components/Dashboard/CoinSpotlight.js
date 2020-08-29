@@ -29,7 +29,7 @@ const CoinSpotlight = () => {
 
   const {currFavourite, coinList} = useContext(DataContext)
   
-  return currFavourite.length
+  return currFavourite
     ? (
   <SpotTile>
       <SpotLightName> 

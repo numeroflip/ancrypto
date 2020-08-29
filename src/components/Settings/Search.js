@@ -4,11 +4,12 @@ import { breakPoints } from '../Shared/GlobalTheme'
 import fuzzy from 'fuzzy'
 import { DataContext } from '../contexts'
 import _ from 'lodash'
+import {H2} from '../Shared'
 
 
-const Title = styled.h2`
-    color: var(--color-main-darker);
+const Title = styled(H2)`
     font-size: var(--xl);
+    margin: var(--xl) 0;
 `
 const Form = styled.form`
     width: 100%;
@@ -22,15 +23,17 @@ const Form = styled.form`
 
 const SearchInput = styled.input`
     border: 0;
-    border: 1px solid var(--color-secondary-light);
+    border: 1px solid transparent;
     padding: var(--m) var(--l);
     box-shadow: var(--shadow);
     border-radius: var(--radius);
-    margin: var(--s) 0;
+    margin-bottom: var(--l);
+    color: var(--color-main-darker);
     font-size: var(--mx);
+    background: var(--color-background);
 
     &:focus {
-        border-color: var(--color-main)
+        border-color: var(--color-main-darker)
     }
 
     @media(max-width: ${breakPoints.mobile}) {

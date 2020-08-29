@@ -5,8 +5,7 @@ export default function (data) {
     title: {
       text: ''
     },
-  
-  
+    
     yAxis: {
       title: {
         text: 'Price'
@@ -17,15 +16,11 @@ export default function (data) {
      {
         type: 'datetime',
         accessibility: {
-        rangeDescription: 'Range: 2010 to 2017'
+        rangeDescription: ''
       }
     },
   
-    legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle'
-    },
+
   
     plotOptions: {
       series: {

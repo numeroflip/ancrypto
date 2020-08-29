@@ -5,6 +5,7 @@ import CoinSpotlight from './CoinSpotlight'
 import styled from 'styled-components'
 import PriceChart from './PriceChart'
 import {DataContext} from '../contexts'
+import {H1} from '../Shared'
 
 
 const ChartGrid = styled.div`
@@ -21,6 +22,13 @@ const Dashboard = () => {
 
   const {favourites} = useContext(DataContext)
 
+  const Wrapper = styled.div`
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  `
+
   return (
     <Page name="dashboard">
       {
@@ -34,7 +42,9 @@ const Dashboard = () => {
             </ChartGrid>
           </>
         )        
-        : <h2>Please select your favourite coins from the Settings page</h2>
+        : <Wrapper>
+            <H1>Welcome!<br/><br/>To begin, please select your favourite coins from the <span>Settings</span> page.</H1>
+          </Wrapper>
       }
     </Page>
   )

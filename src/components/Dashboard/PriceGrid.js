@@ -19,7 +19,8 @@ export default function () {
 
   return(
     <PriceGrid>
-      {prices.map((priceObj, index) => {
+      
+      {prices && prices.map((priceObj, index) => {
         return(
           <PriceTile index={index} key ={'PXKT-' + index} priceObj={priceObj} />
         )

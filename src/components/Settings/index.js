@@ -1,9 +1,10 @@
 import React, { useEffect, useContext } from 'react'
-import WelcomeMessage from './WelcomeMessage'
+import styled from 'styled-components'
 import Page from '../Shared/Page'
 import CoinGrid from './CoinGrid'
 import Search from './Search'
 import {DataContext} from '../contexts'
+import {H2, H3, SubHeading} from '../Shared'
 
 const sortCoinList = (cList) => {
   let sortedCoinList = []
@@ -14,17 +15,33 @@ const sortCoinList = (cList) => {
   })
   return sortedCoinList
 }
+
+const EmptyText = styled(SubHeading)`
+  font-size: var(--mx);
+  margin: var(--xxl) 0;
+` 
+const FavouritesHeader = styled.div`
+  width :100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 let sortedCoins = [];
 
 const Settings = () => {
 
-  const {coinList} = useContext(DataContext)
+  const {coinList, favourites} = useContext(DataContext)
   useEffect(() => {
     sortedCoins = sortCoinList(coinList)
   }, [coinList])
     return (
         <Page name="settings">
-            <WelcomeMessage />
+          <FavouritesHeader>
+            <H2>Your Favourites</H2>
+            <SubHeading>You can choose up to 10 favourites.</SubHeading>
+            {!favourites && <EmptyText>Hmm... It looks quite empty here. Please search, or choose from the list below.</EmptyText>}
+          </FavouritesHeader>
             <CoinGrid  topSection/>
             <Search />
             <CoinGrid sortedCoins={sortedCoins} />

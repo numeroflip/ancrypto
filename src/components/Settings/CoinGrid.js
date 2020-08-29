@@ -10,7 +10,7 @@ const Grid = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, .8fr));
     justify-content: center;
-    grid-gap: 1rem;
+    grid-gap: var(--l);
     align-items: center;
 
 `
@@ -22,15 +22,15 @@ function getLowerSectionCoins(coinList, filteredCoins) {
 }
 
 function displayCoins(coinList, topSection, favourites, filteredCoins) {
-    const KeyList = topSection 
-        ? favourites
-        : getLowerSectionCoins(coinList, filteredCoins)
-
-    return KeyList.map((coinKey, i) => {
+    let keyList = topSection
+      ? favourites
+      : getLowerSectionCoins(coinList, filteredCoins)
+      
+    return keyList.map((coinKey) => {
 
         return topSection 
         ? <CoinTile topSection remove  key={`${coinKey}GZDN`} coinKey={coinKey} /> 
-        :  favourites.includes(coinKey)
+        :  favourites && favourites.includes(coinKey)
             ? <CoinTile disabled={true}  key={`${coinKey}BRGGD`} coinKey={coinKey} />
             : <CoinTile key={`${coinKey}DRMKL`} coinKey={coinKey} />
     })

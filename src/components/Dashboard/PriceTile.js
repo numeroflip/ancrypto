@@ -27,6 +27,10 @@ const PriceTileStyled = styled(SelectableTile)`
   align-items: center;
   width: 100%;
 
+  &:hover {
+    border-color: var(--color-main-dark)
+  }
+
   ${props => props.compact && css`
     font-size: var(--l);
   `}

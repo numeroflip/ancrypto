@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import cc from 'cryptocompare'
+import cc, { coinList } from 'cryptocompare'
 import moment from 'moment'
-
 
 cc.setApiKey('6bce00cebd36b06c07f20e0e94c2a0fe1b0211dc0a8a8dc030f6fb8b4117f707')
 
@@ -11,10 +10,11 @@ const TIME_UNITS = 10;
 export const DataContext = React.createContext();
 
 function getCurrFavourite(favourites) {
+  if (!favourites) {return null}
+  if (favourites.length) { return favourites[0]}
   let currFavInLocal = getFromLocal('currFavourite')
   if (currFavInLocal) {return currFavInLocal}
-  else if (favourites) {return favourites[0]}
-  else return []
+  else return null
 }
 
 function getFromLocal (item) {
@@ -25,22 +25,29 @@ function getFromLocal (item) {
 
 const fetchPrices = async (coinsArr) => {
         
-  const returnData = [];
-  coinsArr.forEach(async (coin) => {
-    try {
-        let priceData = await cc.priceFull(coin, 'USD');
-        returnData.push(priceData)
-    } catch(e) { console.error('Fetch price error: ', e) }
-  })
+  let returnData = [];
+  try {
+    coinsArr.forEach(async (coin) => {
+      try {
+          let priceData = await cc.priceFull(coin, 'USD');
+          returnData.push(priceData)
+      } catch(e) { console.error('Fetch price error: ', coin, e) }
+    })
+  } catch(e) {console.error('Error during fetching prices :', e)}
   return returnData
     
 }
 
 const fetchCoins = async () => {
+  try {
   let coins = await cc.coinList()
   coins = coins.Data
-  try {return coins}
-  catch(e) {console.log(e)}
+  const filteredCoinKeys = Object.keys(coins).filter(coinKey => coins[coinKey].IsTrading)
+  let filteredObj = {}
+  filteredCoinKeys.forEach(key => filteredObj[key] = coins[key])
+  return filteredObj
+  }
+  catch(e) {console.error('Error during coin fetching: ',e)}
 }
 
 const historicalPromises = (currFavourite, interval) => {
@@ -54,7 +61,6 @@ const historicalPromises = (currFavourite, interval) => {
         date
     ))
   }
-
   return Promise.all(promises)
 
 }
@@ -74,64 +80,82 @@ const fetchHistorical = async (currFavourite, interval) => {
   return historical
 }
 
+  const isDay = () => {
+    const hour = new Date().getHours();
+    return (hour < 20 && hour > 7) 
+  }
+
+
+
+
+  // ===================================================================
+  // ==============================DATAPROVIDER=======================================================
+  // ===================================================================
 export const DataProvider = ({children}) => {
 
-  // ==============STATE========================
+  // ======================STATE========================
   const [page, setPage] = useState('dashboard');
-  const [firstVisit, setFirstVisit] = useState(localStorage.getItem('ancrypto') ? false : true)
-  const [favourites, setFavourites] = useState(firstVisit ? [] : getFromLocal('favourites'));
-  const [currFavourite, setCurrFavourite] = useState(getCurrFavourite())
+  const [favourites, setFavourites] = useState(getFromLocal('favourites'));
+  const [currFavourite, setCurrFavourite] = useState(getCurrFavourite(favourites))
   const [coinList, setCoinList] = useState(null)
   const [filteredCoins, setFilteredCoins] = useState([])
   const [prices, setPrices] = useState(null);
   const [historicalData, setHistoricalData] = useState([])
   const [historicalInterval, setHistoricalInterval] = useState("months")
+  const [theme, setTheme] = useState(isDay() ? 'light' : 'dark' );
 
-  // Fetch Coin data at startup
+
+
+  // =============================================================
+  // =======================EFFECTS===============================
+
+
+
+
+  //--- STARTUP - init data
+  //  1 - (Fetch full coinlist and filter out the ones with no price data)
+  //  2 - (Fetch historical price data for the selected Favourite)
   useEffect(() => {
 
     const init = async () => {
-      const coins = await fetchCoins()
-      if (currFavourite.length > 0 ) {
-        const historical = await fetchHistorical(currFavourite, historicalInterval)
-        setHistoricalData(historical)
-      }
-      setCoinList(coins)
-    }           
-    init()
+      try {
+        const coins = await fetchCoins()     // 1
+        if (currFavourite) {                // 2
+          const historical = await fetchHistorical(currFavourite, historicalInterval)
+          setHistoricalData(historical)
+        }
+        setCoinList(coins)
+      } catch(e) {console.error('Error during startup coinList fetching: ', (e))}
+    }    
 
+    init()
   }, [])
 
-  // Fetch the pices of favourites
+  //--- Fetch prices of all the favourites
   useEffect(() => {
-
     const updatePrices = async (coinsArr) => {
-      let newPrices = await fetchPrices(coinsArr)
-      setPrices(newPrices)
-    }
-    updatePrices(favourites)
+      if (favourites.length) {
+        let newPrices = await fetchPrices(coinsArr)
+        setPrices(newPrices)
+      }}
+    updatePrices(favourites)  
+  }, [favourites]);
 
-  },[favourites])
-
-  const addCoin = coinKey => {
-    if(currFavourite.length === 0) {setCurrFavourite(coinKey)}
-    if((favourites.length < MAX_FAVOURITES ) && !favourites.includes(coinKey)) {
-      setFavourites([...favourites, coinKey]);
-    }
-  }
-
+  // --- Update historical prices if the selected, or the interval changes
   useEffect(() => {
     const updateHistoricalPrice = async () => {
-      if (currFavourite.length) {
-        const historical = await fetchHistorical(currFavourite, historicalInterval)
-        setHistoricalData(historical)
-      }
-    }
+      if (currFavourite) {
+        try {
+          const historical = await fetchHistorical(currFavourite, historicalInterval)
+          setHistoricalData(historical)
+        } catch(e) {console.error('Historical price fetching error: ', e)}
+      }}
     setHistoricalData(null)
     updateHistoricalPrice()
-
   }, [currFavourite, historicalInterval])
-  // Handle localstorage updates
+
+
+  // Handle localstorage updates on change
   useEffect(() => {
     localStorage.setItem('ancrypto', JSON.stringify({
       favourites,
@@ -139,34 +163,50 @@ export const DataProvider = ({children}) => {
     }))
   },[currFavourite, favourites])
 
+
+  // ----------------------------ADD/REMOVE COIN-------------------------------
+  const addCoin = coinKey => {
+    if(!currFavourite) {setCurrFavourite(coinKey)}
+    if((favourites.length < MAX_FAVOURITES ) && !favourites.includes(coinKey)) {
+      setFavourites([...favourites, coinKey]);
+    }
+  }
   const removeCoin = coinKey => {
     const updatedFavs = favourites.filter(key => key !== coinKey)
-    if( favourites.includes(coinKey) ) {console.log(true, favourites, coinKey) ; setCurrFavourite(updatedFavs[0])}
+    if( favourites.includes(coinKey) ) {setCurrFavourite(updatedFavs[0])}
     setFavourites(updatedFavs)
+  }
+  // -----------------------------THEME TOGGLER--------------------------
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light')
   }
 
 
-
   return (
-  <DataContext.Provider value={
-    {
-      page, 
-      coinList,
-      setPage, 
-      historicalData,
-      favourites,
-      setFavourites,
-      historicalInterval,
-      setHistoricalInterval,
-      currFavourite,
-      setCurrFavourite, 
-      filteredCoins,
-      setFilteredCoins,
-      addCoin, 
-      removeCoin, 
-      firstVisit,
-      prices
+  <DataContext.Provider 
+    value={
+      {
+        page, 
+        theme,
+        toggleTheme,
+        coinList,
+        setPage, 
+        historicalData,
+        favourites,
+        setFavourites,
+        historicalInterval,
+        setHistoricalInterval,
+        currFavourite,
+        setCurrFavourite, 
+        filteredCoins,
+        setFilteredCoins,
+        addCoin, 
+        removeCoin, 
+        prices
+      }
     }
-  }>{children}</DataContext.Provider>
+  >
+    {children}
+  </DataContext.Provider>
   )
 }

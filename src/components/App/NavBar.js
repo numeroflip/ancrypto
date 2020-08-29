@@ -3,21 +3,23 @@ import styled, { css } from 'styled-components'
 import { DataContext } from '../contexts'
 
 const Bar = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr ;
-    align-items: center;
+  color: var(--color-text);
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  align-items: center;
 
-    nav {
-        display: flex; 
-        justify-self: end;
-    }
+  nav {
+      display: flex; 
+      justify-self: end;
+  }
 
 `
 
 const Logo = styled.span`
-    justify-self: start;
-    font-size: 1.2rem;
-    font-weight: 700;
+  color: var(--color-main-darker);
+  justify-self: start;
+  font-size: 1.2rem;
+  font-weight: 700;
 `
 
 function ControlButton({name}) {
@@ -49,7 +51,7 @@ const ControlBtnElem = styled.div`
         ${props => props.active && css`
             opacity: 1;
             font-weight: 500;
-            border-color: black;      
+            border-color: var(--color-main-dark);      
         `}
 
 `

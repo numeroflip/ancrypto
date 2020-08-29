@@ -7,12 +7,14 @@ export const breakPoints = {
 }
 
 
-
 export default createGlobalStyle`
 
   :root {
+
+    
     --xs: .2rem;
     --s: .5rem;
+    --ms: .8rem;
     --m: 1rem;
     --mx: 1.25rem;
     --l: 1.5rem;
@@ -22,32 +24,35 @@ export default createGlobalStyle`
     --max-width: 1200px;
 
     /* Colors */
-    --color-success: #5be37ed9;
-    --color-success-dark:#25aa45;
+    --color-success: ${props => props.dark ? '#5be37ed9'  : '#5be37ed9'};
+    --color-success-dark:${props => props.dark ? '#25aa45'  : '#25aa45'};
 
-    --color-danger-lighter: #fdd;
-    --color-danger-light: #ffb3b3;
-    --color-danger: #ff6060;
-    --color-danger-dark: #f03535;
-    --color-main-lighter: #ebf9ff;
-    --color-main-light: #d1f0ff;
-    --color-main: #6cc1e1;
-    --color-main-dark: #3486dd;
-    --color-main-darker: #235f9f;
-    --color-background: #fff;
-    --color-text: #000;
-    --color-secondary: gray;
-    --color-secondary-light: #e6e6e6;
-    --color-text-negative: white;
-    --color-background: white;
-    --color-background-negative: white;
+    --color-danger-lighter: ${props => props.dark ? '#fdd'  : '#fdd'};
+    --color-danger-light: ${props => props.dark ? '#ffb3b3'  : '#ffb3b3'};
+    --color-danger: ${props => props.dark ? '#f03535'  : '#ff6060'};
+    --color-danger-dark: ${props => props.dark ? '#f03535'  : '#f03535'};
 
-    --gradient-main: linear-graadient( to top left, #99ddff, white);
+    --color-main-lighter: ${props => props.dark ? '#fbdb60'  : '#ebf9ff'};
+    --color-main-light: ${props => props.dark ? '#fbd129'  : '#6cc1e1'};
+    --color-main: ${props => props.dark ? '#ffcb00d9'  : '#3486dd'};
+    --color-main-dark: ${props => props.dark ? '#fbd129'  : '#3486dd'};
+    --color-main-darker: ${props => props.dark ? '#fbdb60'  : '#235f9f'};
+
+    --color-background: ${props => props.dark ? '#000000e6'  : '#fff'};
+    --color-background-negative: ${props => props.dark ? 'white'  : 'black'};
+    --color-background-secondary: ${props => props.dark ? 'gray' : '#ebf9ff'};
+
+    --color-text: ${props => props.dark ? '#fff'  : '#000'};
+    --color-text-negative: ${props => props.dark ? '#000'  : 'white'};
+    --color-secondary: ${props => props.dark ? 'gray'  : 'gray'};
+    --color-secondary-light: ${props => props.dark ? '#282828d9'  : '#e6e6e6'};
+
+    --gradient-main: linear-gradient( to top left, var(--color-background), var(--color-background-secondary));
     /* Typography */
     --font-family: 'Fira Sans', sans-serif;
     /* Shadow */
-    --shadow: 1px 4px 14px rgba(0,0,0, 0.1);
-    --shadow-light: 1px 2px 5px rgba(0,0,0, 0.1);
+    --shadow: ${props => props.dark ? 'inset 1px 4px 40px rgba(0,0,0, 0.5)'  : '1px 4px 14px rgba(0,0,0, 0.1)'};
+    --shadow-light: ${props => props.dark ? 'inset 1px 2px 20px rgba(0,0,0, 0.2)'  : '1px 2px 5px rgba(0,0,0, 0.1)'};
 
     --radius: 10rem;
 
@@ -76,7 +81,10 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-family);
-    background: var(--gradient-main);
+    background: var(--color-background);
+    color: var(--color-text);
+    width: 100%;
+    transition: ease .3s background;
   }
 
   code {
