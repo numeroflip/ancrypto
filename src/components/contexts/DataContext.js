@@ -30,10 +30,19 @@ const fetchPrices = async (coinsArr) => {
     coinsArr.forEach(async (coin) => {
       try {
           let priceData = await cc.priceFull(coin, 'USD');
+          // Handle if there isn't any price data
+          if (!priceData[coin]) {throw 'The API returned an empty object'}
           returnData.push(priceData)
-      } catch(e) { console.error('Fetch price error: ', coin, e) }
+      } catch(e) { 
+        returnData.push({
+          [coin]: {
+            noData: true
+          }
+        })
+        console.warn('No price data for: ', coin, e) 
+      }
     })
-  } catch(e) {console.error('Error during fetching prices :', e)}
+  } catch(e) {console.warn('Error during fetching prices :', e)}
   return returnData
     
 }
@@ -42,10 +51,7 @@ const fetchCoins = async () => {
   try {
   let coins = await cc.coinList()
   coins = coins.Data
-  const filteredCoinKeys = Object.keys(coins).filter(coinKey => coins[coinKey].IsTrading)
-  let filteredObj = {}
-  filteredCoinKeys.forEach(key => filteredObj[key] = coins[key])
-  return filteredObj
+  return coins
   }
   catch(e) {console.error('Error during coin fetching: ',e)}
 }
@@ -82,7 +88,7 @@ const fetchHistorical = async (currFavourite, interval) => {
 
   const isDay = () => {
     const hour = new Date().getHours();
-    return (hour < 20 && hour > 7) 
+    return (hour <= 21 && hour >= 6) 
   }
 
 
@@ -109,10 +115,7 @@ export const DataProvider = ({children}) => {
   // =============================================================
   // =======================EFFECTS===============================
 
-
-
-
-  //--- STARTUP - init data
+  // --- STARTUP - init data
   //  1 - (Fetch full coinlist and filter out the ones with no price data)
   //  2 - (Fetch historical price data for the selected Favourite)
   useEffect(() => {

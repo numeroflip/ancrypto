@@ -22,6 +22,13 @@ const percFormat = (percent) => {
 
 const PriceTileStyled = styled(SelectableTile)`
 
+  ${props => props.noData && css`
+    pointer-events: none;
+    opacity: 0.3;
+    background-color: var(--color-secondary-light);
+    height: 100%;
+  `}
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -45,7 +52,7 @@ const PriceTileStyled = styled(SelectableTile)`
 const Price = styled.div`
   justify-self: start;
 
-  font-size: var(--l);
+  font-size: ${props => props.noData ? 'var(--m)' : 'var(--l)'};
   font-weight: 700;
 `
 
@@ -68,19 +75,20 @@ const Symbol = styled.div`
 
 
 const PriceTile = ({priceObj, index}) => {
-  
+    
   const {currFavourite, setCurrFavourite} = useContext(DataContext)
   
   const sym = Object.keys(priceObj)[0]
-  const data = priceObj[sym]['USD']
+  const isData = !priceObj[sym].noData
+  const data = isData ? priceObj[sym]['USD'] : {CHANGEPCT24HOUR: false, PRICE: false }
 
 
 
   return (
-    <PriceTileStyled as='button' onClick={() => setCurrFavourite(sym)} currFavourite={sym === currFavourite} compact={index < 4}>
+    <PriceTileStyled noData={!isData} as='button' onClick={() => setCurrFavourite(sym)} currFavourite={sym === currFavourite} compact={index < 4}>
       <Symbol>{sym}</Symbol>
-      <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{percFormat(data.CHANGEPCT24HOUR)}%</ChangePct>
-      <Price>{numFormat(data.PRICE)}</Price>
+      <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{isData && `${percFormat(data.CHANGEPCT24HOUR)}%`}</ChangePct>
+      <Price noData={!isData}>{isData ? numFormat(data.PRICE) : 'No data'}</Price>
     </PriceTileStyled>
   )
 

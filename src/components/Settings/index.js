@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import Page from '../Shared/Page'
 import CoinGrid from './CoinGrid'
@@ -32,6 +32,8 @@ let sortedCoins = [];
 const Settings = () => {
 
   const {coinList, favourites} = useContext(DataContext)
+  const [filteredCoins, setFilteredCoins] = useState([]);
+
   useEffect(() => {
     sortedCoins = sortCoinList(coinList)
   }, [coinList])
@@ -43,8 +45,8 @@ const Settings = () => {
             {!favourites && <EmptyText>Hmm... It looks quite empty here. Please search, or choose from the list below.</EmptyText>}
           </FavouritesHeader>
             <CoinGrid  topSection/>
-            <Search />
-            <CoinGrid sortedCoins={sortedCoins} />
+            <Search setFilteredCoins={setFilteredCoins} />
+            <CoinGrid sortedCoins={sortedCoins} filteredCoins={filteredCoins} />
         </Page>
     )
 

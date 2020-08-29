@@ -55,8 +55,6 @@ const handleFilter = _.debounce((userQuery, coinList, setFilteredCoins) => {
         .filter(userQuery, allStringsToSearch, {})
         .map(result => result.string)
 
-    fuzzyResults = allStringsToSearch.filter(item => item.toLowerCase().includes(userQuery.toLowerCase()))
-
     let filteredCoins = _.pickBy(coinList, (result, symkey) => {
         let coinName = result.CoinName;
         return fuzzyResults.includes(symkey) || fuzzyResults.includes(coinName)
@@ -73,8 +71,10 @@ function filterCoins(e, setFilteredCoins, coinList) {
     handleFilter(userQuery, coinList, setFilteredCoins);
 }
 
-const Search = () => {
-    const { setFilteredCoins, coinList } = useContext(DataContext)
+const Search = ({ setFilteredCoins}) => {
+    const { 
+      //setFilteredCoins,
+       coinList } = useContext(DataContext)
         
     return (
         <Form>

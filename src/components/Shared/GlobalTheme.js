@@ -45,7 +45,7 @@ export default createGlobalStyle`
     --color-text: ${props => props.dark ? '#fff'  : '#000'};
     --color-text-negative: ${props => props.dark ? '#000'  : 'white'};
     --color-secondary: ${props => props.dark ? 'gray'  : 'gray'};
-    --color-secondary-light: ${props => props.dark ? '#282828d9'  : '#e6e6e6'};
+    --color-secondary-light: ${props => props.dark ? '#3c3b3b70'  : '#e6e6e6'};
 
     --gradient-main: linear-gradient( to top left, var(--color-background), var(--color-background-secondary));
     /* Typography */

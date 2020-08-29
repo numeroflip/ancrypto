@@ -25,7 +25,7 @@ function displayCoins(coinList, topSection, favourites, filteredCoins) {
     let keyList = topSection
       ? favourites
       : getLowerSectionCoins(coinList, filteredCoins)
-      
+
     return keyList.map((coinKey) => {
 
         return topSection 
@@ -37,9 +37,9 @@ function displayCoins(coinList, topSection, favourites, filteredCoins) {
 
 }
 
-export default function CoinGrid({topSection, sortedCoins}) {
+export default function CoinGrid({topSection, sortedCoins, filteredCoins}) {
 
-    const {  favourites, filteredCoins } = useContext(DataContext);
+    const {  favourites } = useContext(DataContext);
 
     return (
         <Grid>
