@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled, {css} from 'styled-components'
-import {SelectableTile, breakPoints} from '../Shared'
+import {SelectableTile} from '../Shared'
 import { DataContext } from '../contexts'
 
 const formatter = new Intl.NumberFormat('en-US', {

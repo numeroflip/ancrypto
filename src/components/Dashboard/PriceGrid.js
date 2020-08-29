@@ -14,10 +14,12 @@ const PriceGrid = styled.div`
   align-items: center;
 
   @media( max-width: ${breakPoints.tablet}) {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
   @media( max-width: ${breakPoints.smallMobile}) {
-    grid-template-columns: 1fr 1fr
+    grid-template-columns: 1fr 1fr;
   }
 `
 

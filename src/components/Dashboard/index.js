@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import Page from '../Shared/Page'
 import PriceGrid from './PriceGrid'
 import CoinSpotlight from './CoinSpotlight'
 import styled from 'styled-components'
@@ -29,30 +28,22 @@ justify-content: center;
 
 const Dashboard = () => {
 
-  const {favourites} = useContext(DataContext)
+  const {favourites, coinList} = useContext(DataContext)
 
-
-
-  return ( 
-    <Page name="dashboard">
-      {
-        favourites.length 
-          ? (
-            <>
-              <PriceGrid />
-              <ChartGrid>
-                <CoinSpotlight />
-                <PriceChart />
-              </ChartGrid>
-            </>
-          )        
-          : <Wrapper>
-              <H1>Welcome!<br/><br/>To begin, please select your favourite coins from the <span>Settings</span> page.</H1>
-            </Wrapper>
-      }
-    </Page>
-  )
-
+  return  !favourites.length 
+    ? <Wrapper>
+        <H1>Welcome!<br/><br/>To begin, please select your favourite coins from the <span>Settings</span> page.</H1>
+      </Wrapper>
+    : coinList 
+      ? <>
+          <PriceGrid />
+          <ChartGrid>
+            <CoinSpotlight />
+            <PriceChart />
+          </ChartGrid>
+        </>
+      : <p>Loading Coins...</p>
+    
 }
 
 export default Dashboard

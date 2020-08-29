@@ -92,7 +92,18 @@ const fetchHistorical = async (currFavourite, interval) => {
     return (hour <= 21 && hour >= 6) 
   }
 
+  const sortCoins = (cList) => {
 
+    let sortedCoinList = []
+    if (cList) {
+      Object.keys(cList).forEach(key => {
+        let coinObj = cList[key]
+        const order = +coinObj['SortOrder'] -1
+        sortedCoinList[order] = coinObj['Symbol']
+      })
+    }
+    return sortedCoinList
+  }
 
 
   // ===================================================================
@@ -101,10 +112,10 @@ const fetchHistorical = async (currFavourite, interval) => {
 export const DataProvider = ({children}) => {
 
   // ======================STATE========================
-  const [page, setPage] = useState('dashboard');
   const [favourites, setFavourites] = useState(getFromLocal('favourites'));
   const [currFavourite, setCurrFavourite] = useState(getCurrFavourite(favourites))
   const [coinList, setCoinList] = useState(null)
+  const [sortedCoins, setSortedCoins] = useState([])
   const [prices, setPrices] = useState(null);
   const [historicalData, setHistoricalData] = useState([])
   const [historicalInterval, setHistoricalInterval] = useState("months")
@@ -128,6 +139,10 @@ export const DataProvider = ({children}) => {
     init()
   }, [])
 
+  // --- Sort coinList based on popularity
+  useEffect(() => {
+    setSortedCoins(sortCoins(coinList))
+  }, [coinList])
 
   //--- Fetch prices of all the favourites
   useEffect(() => {
@@ -164,12 +179,7 @@ export const DataProvider = ({children}) => {
 
   // ----------------------------ADD/REMOVE COIN-------------------------------
   const addCoin = coinKey => {
-    console.log(coinKey)
-    console.log(currFavourite)
     if(!currFavourite) {
-      console.log(coinKey)
-      console.log(!currFavourite)
-
       setCurrFavourite(coinKey)
     }
 
@@ -192,11 +202,10 @@ export const DataProvider = ({children}) => {
   <DataContext.Provider 
     value={
       {
-        page, 
         theme,
         toggleTheme,
         coinList,
-        setPage, 
+        sortedCoins,
         historicalData,
         favourites,
         setFavourites,

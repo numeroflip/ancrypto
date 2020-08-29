@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { breakPoints } from '../Shared/GlobalTheme'
 
 export default styled.div`
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
 
     margin: 0 auto;

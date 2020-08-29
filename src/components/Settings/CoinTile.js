@@ -1,4 +1,4 @@
-import { SelectableTile, breakPoints } from '../Shared'
+import { SelectableTile } from '../Shared'
 import React, { useContext } from 'react'
 import CoinSymbol from './CoinSymbol'
 import styled, { css } from 'styled-components'

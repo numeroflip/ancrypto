@@ -7,8 +7,6 @@ export const Tile = styled.div`
     background: transparent;
     position: relative;
     padding: var(--m);
-    /* background: var(--color-main-lighter); */
-    /* border-radius: var(--radius); */
     border-radius: 1rem;
     color: var(--color-text);
 

@@ -38,21 +38,22 @@ function displayCoins(coinList, topSection, favourites, filteredCoins) {
     return keyList.map((coinKey) => {
 
         return topSection 
-        ? <CoinTile topSection remove  key={`${coinKey}GZDN`} coinKey={coinKey} /> 
-        :  favourites && favourites.includes(coinKey)
-            ? <CoinTile disabled={true}  key={`${coinKey}BRGGD`} coinKey={coinKey} />
-            : <CoinTile key={`${coinKey}DRMKL`} coinKey={coinKey} />
+          ? <CoinTile topSection remove  key={`${coinKey}GZDN`} coinKey={coinKey} /> 
+          :  favourites && favourites.includes(coinKey)
+              ? <CoinTile disabled={true}  key={`${coinKey}BRGGD`} coinKey={coinKey} />
+              : <CoinTile key={`${coinKey}DRMKL`} coinKey={coinKey} />
     })
 
 }
 
-export default function CoinGrid({topSection, sortedCoins, filteredCoins}) {
 
-    const {  favourites } = useContext(DataContext);
+export default function CoinGrid({ topSection, filteredCoins}) {
+
+    const { favourites, sortedCoins} = useContext(DataContext);
 
     return (
         <Grid>
-            {displayCoins( sortedCoins, topSection, favourites, filteredCoins )}
+            {displayCoins(sortedCoins, topSection, favourites, filteredCoins )}
         </Grid>
     )
 }

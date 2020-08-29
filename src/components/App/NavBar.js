@@ -1,20 +1,35 @@
-import React, { useContext } from 'react'
-import styled, { css } from 'styled-components'
-import { DataContext } from '../contexts'
+import React from 'react'
+import styled from 'styled-components'
+import { Link, NavLink } from "react-router-dom";
 
 const Bar = styled.div`
   color: var(--color-text);
-  display: grid;
-  grid-template-columns: 1fr 1fr ;
+  display: flex;
   align-items: center;
+  justify-content: flex-start;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
   nav {
+      margin-left: auto;
       display: flex; 
-      justify-self: end;
+      
+      a {
+        border-bottom: 2px solid transparent;
+        transition: ease .2s all;
+        padding: var(--xs);
+        margin: 0 var(--m);
+      }
+
+      .active-link {
+        border-color: var(--color-main);
+      }
   }
 
 `
-
 const Logo = styled.span`
   color: var(--color-main-darker);
   justify-self: start;
@@ -22,48 +37,13 @@ const Logo = styled.span`
   font-weight: 700;
 `
 
-function ControlButton({name}) {
-    const { page, setPage } = useContext(DataContext);
-    return (
-
-        <ControlBtnElem
-            active={page === name}
-            onClick={() => setPage(name)}
-            >
-            {name}
-        </ControlBtnElem>
-
-    )
-}
-
-const ControlBtnElem = styled.div`
-    cursor: pointer;
-    opacity: .8;
-    margin: 0 1rem;
-    padding: .2rem .5rem;
-    transition: ease .2s opacity;
-    border-bottom: 2px solid transparent;
-    text-transform: capitalize;
-
-    &:hover {
-        opacity: 1;
-    }
-        ${props => props.active && css`
-            opacity: 1;
-            font-weight: 500;
-            border-color: var(--color-main-dark);      
-        `}
-
-`
-
 export default function(){
     return (
         <Bar>
-            <Logo>Ancrypto</Logo>
-
+            <Link to='/'><Logo>Ancrypto</Logo></Link>
             <nav>
-                <ControlButton name='dashboard' />
-                <ControlButton name='settings' />
+                <NavLink activeClassName="active-link" exact to='/'>Dashboard</NavLink>
+                <NavLink activeClassName="active-link" exact to='/settings'>Settings</NavLink>
             </nav>
 
         </Bar>
