@@ -1,4 +1,4 @@
-import { SelectableTile } from '../Shared/Tile'
+import { SelectableTile, breakPoints } from '../Shared'
 import React, { useContext } from 'react'
 import CoinSymbol from './CoinSymbol'
 import styled, { css } from 'styled-components'
@@ -21,11 +21,6 @@ export const CoinTile = styled(SelectableTile)`
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
-    ${props => props.disabled && (css`
-        opacity: 0.3;
-        pointer-events: none;
-    `)}
-    /* opacity: ${props => props.disabled ? '0.5' : '1'}; */
 
     &:after {
         position: absolute;
@@ -46,11 +41,37 @@ export const CoinTile = styled(SelectableTile)`
         transition: ease .2s all;
 
     }
+
+    @media( hover: none ) {
+      border: none;
+
+      padding-right: var(--xxl);
+
+      &:after {
+        font-size: ${props => props.remove ? 'var(--l)' : 'var(--xl)'};
+        opacity: 1;
+        height: var(--xl);
+        width: var(--xl);
+        bottom: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+
+    ${props => props.disabled && (css`
+        opacity: 0.3;
+        pointer-events: none;
+    `)}
+
+
+
         &:hover {
 
             border-color: ${props => props.remove && 'var(--color-danger)' };
-            /* background: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'}; */
-        &:after {
+
+          &:after {
             opacity: 1;
         }
     }

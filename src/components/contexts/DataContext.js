@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import cc, { coinList } from 'cryptocompare'
+import cc from 'cryptocompare'
 import moment from 'moment'
 
 cc.setApiKey('6bce00cebd36b06c07f20e0e94c2a0fe1b0211dc0a8a8dc030f6fb8b4117f707')
@@ -10,7 +10,7 @@ const TIME_UNITS = 10;
 export const DataContext = React.createContext();
 
 function getCurrFavourite(favourites) {
-  if (!favourites) {return null}
+  if (!favourites.length) {return null}
   if (favourites.length) { return favourites[0]}
   let currFavInLocal = getFromLocal('currFavourite')
   if (currFavInLocal) {return currFavInLocal}
@@ -34,6 +34,7 @@ const fetchPrices = async (coinsArr) => {
           if (!priceData[coin]) {throw 'The API returned an empty object'}
           returnData.push(priceData)
       } catch(e) { 
+        // Handling if there is no data. We use this in ../Dashboard/PriceTile.js
         returnData.push({
           [coin]: {
             noData: true
@@ -104,7 +105,6 @@ export const DataProvider = ({children}) => {
   const [favourites, setFavourites] = useState(getFromLocal('favourites'));
   const [currFavourite, setCurrFavourite] = useState(getCurrFavourite(favourites))
   const [coinList, setCoinList] = useState(null)
-  const [filteredCoins, setFilteredCoins] = useState([])
   const [prices, setPrices] = useState(null);
   const [historicalData, setHistoricalData] = useState([])
   const [historicalInterval, setHistoricalInterval] = useState("months")
@@ -116,23 +116,18 @@ export const DataProvider = ({children}) => {
   // =======================EFFECTS===============================
 
   // --- STARTUP - init data
-  //  1 - (Fetch full coinlist and filter out the ones with no price data)
-  //  2 - (Fetch historical price data for the selected Favourite)
+  // (Fetch the list of all the coins)
   useEffect(() => {
 
     const init = async () => {
       try {
-        const coins = await fetchCoins()     // 1
-        if (currFavourite) {                // 2
-          const historical = await fetchHistorical(currFavourite, historicalInterval)
-          setHistoricalData(historical)
-        }
+         const coins = await fetchCoins()     // 1
         setCoinList(coins)
       } catch(e) {console.error('Error during startup coinList fetching: ', (e))}
     }    
-
     init()
   }, [])
+
 
   //--- Fetch prices of all the favourites
   useEffect(() => {
@@ -169,7 +164,15 @@ export const DataProvider = ({children}) => {
 
   // ----------------------------ADD/REMOVE COIN-------------------------------
   const addCoin = coinKey => {
-    if(!currFavourite) {setCurrFavourite(coinKey)}
+    console.log(coinKey)
+    console.log(currFavourite)
+    if(!currFavourite) {
+      console.log(coinKey)
+      console.log(!currFavourite)
+
+      setCurrFavourite(coinKey)
+    }
+
     if((favourites.length < MAX_FAVOURITES ) && !favourites.includes(coinKey)) {
       setFavourites([...favourites, coinKey]);
     }
@@ -201,8 +204,6 @@ export const DataProvider = ({children}) => {
         setHistoricalInterval,
         currFavourite,
         setCurrFavourite, 
-        filteredCoins,
-        setFilteredCoins,
         addCoin, 
         removeCoin, 
         prices

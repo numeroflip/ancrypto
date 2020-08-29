@@ -17,7 +17,10 @@ export const SelectableTile = styled(Tile)`
     border: 0 ;
     transition: ease .2s all;
     border-left: 10px solid transparent; 
+    height: 100%;
+
     &:hover {
+        transform: scale(1.05);
         border-color: var(--color-success);
         cursor: pointer;
         box-shadow: var(--shadow)

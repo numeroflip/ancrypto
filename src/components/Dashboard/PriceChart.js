@@ -45,8 +45,9 @@ export default function () {
       <TopBar>
         <Title>{historicalData ? currFavourite : 'Loading...'}</Title>
         <ChartSelect 
+          onSubmit={e => e.preventDefault()}
           defaultValue={historicalInterval}
-          onChange={e => setHistoricalInterval(e.target.value)}
+          onChange={e => {e.preventDefault(); setHistoricalInterval(e.target.value)}}
           >
           <option value='days'>Days</option>
           <option value='weeks'>Weeks</option>

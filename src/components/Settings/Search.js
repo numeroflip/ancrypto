@@ -77,7 +77,7 @@ const Search = ({ setFilteredCoins}) => {
        coinList } = useContext(DataContext)
         
     return (
-        <Form>
+        <Form onSubmit={e => {e.preventDefault()}}>
             <Title>Search</Title>
             <SearchInput
                 onKeyUp={(e) => filterCoins(e, setFilteredCoins, coinList)}

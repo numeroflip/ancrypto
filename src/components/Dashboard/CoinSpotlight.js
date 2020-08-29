@@ -2,6 +2,13 @@ import React, { useContext } from 'react'
 import { Tile, CoinImage } from '../Shared'
 import { DataContext } from '../contexts'
 import styled from 'styled-components'
+import {breakPoints} from '../Shared'
+
+
+const SpotLightName = styled.h2`
+  justify-self: center;
+  margin: var(--m);
+`
 
 const SpotTile = styled(Tile)`
   height: 100%;
@@ -15,13 +22,14 @@ const SpotTile = styled(Tile)`
   box-shadow: var(--shadow);
   max-width: var(--max-width);
   margin: 0 auto;
-`
 
-const SpotLightName = styled.h2`
-  justify-self: center;
-  margin: var(--m);
-`
+  @media( max-width: ${breakPoints.tablet}) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 
+  }
+`
 
 
 
@@ -31,14 +39,14 @@ const CoinSpotlight = () => {
   
   return currFavourite
     ? (
-  <SpotTile>
-      <SpotLightName> 
-        {coinList[currFavourite].CoinName}
-      </SpotLightName>
-      <CoinImage spotlight coin={coinList[currFavourite]} />
-  </SpotTile>
-  )
-  : <div>Nothing here</div>
+      <SpotTile>
+          <SpotLightName> 
+            {coinList[currFavourite].CoinName}
+          </SpotLightName>
+          <CoinImage spotlight coin={coinList[currFavourite]} />
+      </SpotTile>
+    )
+    : <div>Nothing here</div>
 }
 
 export default CoinSpotlight

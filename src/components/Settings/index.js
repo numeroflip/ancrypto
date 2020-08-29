@@ -4,7 +4,7 @@ import Page from '../Shared/Page'
 import CoinGrid from './CoinGrid'
 import Search from './Search'
 import {DataContext} from '../contexts'
-import {H2, H3, SubHeading} from '../Shared'
+import {H2,  SubHeading} from '../Shared'
 
 const sortCoinList = (cList) => {
   let sortedCoinList = []
@@ -42,7 +42,7 @@ const Settings = () => {
           <FavouritesHeader>
             <H2>Your Favourites</H2>
             <SubHeading>You can choose up to 10 favourites.</SubHeading>
-            {!favourites && <EmptyText>Hmm... It looks quite empty here. Please search, or choose from the list below.</EmptyText>}
+            {!favourites.length && <EmptyText>Hmm... It looks quite empty here. Please search, or choose from the list below.</EmptyText>}
           </FavouritesHeader>
             <CoinGrid  topSection/>
             <Search setFilteredCoins={setFilteredCoins} />

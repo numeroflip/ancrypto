@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { DataContext } from '../contexts'
 import CoinTile from './CoinTile'
+import {breakPoints} from '../Shared'
 
 
 const Grid = styled.div`
@@ -12,6 +13,14 @@ const Grid = styled.div`
     justify-content: center;
     grid-gap: var(--l);
     align-items: center;
+
+    @media( max-width: ${breakPoints.tablet}) {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+  }
+
+    @media( max-width: ${breakPoints.smallMobile}) {
+      grid-template-columns: 1fr 1fr;
+    }
 
 `
 

@@ -5,7 +5,7 @@ import CoinSpotlight from './CoinSpotlight'
 import styled from 'styled-components'
 import PriceChart from './PriceChart'
 import {DataContext} from '../contexts'
-import {H1} from '../Shared'
+import {H1, breakPoints} from '../Shared'
 
 
 const ChartGrid = styled.div`
@@ -15,36 +15,40 @@ const ChartGrid = styled.div`
   grid-template-columns: 1fr 3fr;
   align-items: center;
   justify-content: center;
-`
 
+  @media( max-width: ${breakPoints.tablet}) {
+    grid-template-columns: 1fr;
+  }
+`
+const Wrapper = styled.div`
+height: 60vh;
+display: flex;
+align-items: center;
+justify-content: center;
+`
 
 const Dashboard = () => {
 
   const {favourites} = useContext(DataContext)
 
-  const Wrapper = styled.div`
-  height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  `
 
-  return (
+
+  return ( 
     <Page name="dashboard">
       {
         favourites.length 
-        ? (
-          <>
-            <PriceGrid />
-            <ChartGrid>
-              <CoinSpotlight />
-              <PriceChart />
-            </ChartGrid>
-          </>
-        )        
-        : <Wrapper>
-            <H1>Welcome!<br/><br/>To begin, please select your favourite coins from the <span>Settings</span> page.</H1>
-          </Wrapper>
+          ? (
+            <>
+              <PriceGrid />
+              <ChartGrid>
+                <CoinSpotlight />
+                <PriceChart />
+              </ChartGrid>
+            </>
+          )        
+          : <Wrapper>
+              <H1>Welcome!<br/><br/>To begin, please select your favourite coins from the <span>Settings</span> page.</H1>
+            </Wrapper>
       }
     </Page>
   )

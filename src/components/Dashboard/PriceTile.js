@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled, {css} from 'styled-components'
-import {SelectableTile} from '../Shared'
+import {SelectableTile, breakPoints} from '../Shared'
 import { DataContext } from '../contexts'
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -22,20 +22,31 @@ const percFormat = (percent) => {
 
 const PriceTileStyled = styled(SelectableTile)`
 
+  opacity: 0.8;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  width: 100%;
+
   ${props => props.noData && css`
     pointer-events: none;
     opacity: 0.3;
     background-color: var(--color-secondary-light);
     height: 100%;
+    box-shadow: none;
+
+      ${Price} {
+        font-weight: 400;
+      }
+
+
   `}
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  width: 100%;
-
   &:hover {
-    border-color: var(--color-main-dark)
+    border-color: var(--color-main-dark);
+    opacity: 1;
+    transform: scale(1.05);
   }
 
   ${props => props.compact && css`
@@ -43,16 +54,19 @@ const PriceTileStyled = styled(SelectableTile)`
   `}
 
   ${props => props.currFavourite && css`
+    opacity: 1;
     pointer-events: none;
     box-shadow: var(--shadow);
     border-color: var(--color-main-dark);
+    transform: scale(1.05);
+
   `}
 `
 
 const Price = styled.div`
   justify-self: start;
 
-  font-size: ${props => props.noData ? 'var(--m)' : 'var(--l)'};
+  font-size: ${props => props.noData ? 'var(--m)' : 'var(--mx)'};
   font-weight: 700;
 `
 
@@ -70,15 +84,23 @@ const ChangePct = styled.div`
 const Symbol = styled.div`
   justify-self: start;
   font-size: var(--m);
-  font-weight: 700;
+  font-weight: 500;
+`
+
+const TopBar = styled.div`
+  grid-column: 1/3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 
 const PriceTile = ({priceObj, index}) => {
-    
+
   const {currFavourite, setCurrFavourite} = useContext(DataContext)
   
   const sym = Object.keys(priceObj)[0]
+  // Handling if there is no price data
   const isData = !priceObj[sym].noData
   const data = isData ? priceObj[sym]['USD'] : {CHANGEPCT24HOUR: false, PRICE: false }
 
@@ -86,8 +108,10 @@ const PriceTile = ({priceObj, index}) => {
 
   return (
     <PriceTileStyled noData={!isData} as='button' onClick={() => setCurrFavourite(sym)} currFavourite={sym === currFavourite} compact={index < 4}>
-      <Symbol>{sym}</Symbol>
-      <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{isData && `${percFormat(data.CHANGEPCT24HOUR)}%`}</ChangePct>
+      <TopBar>
+        <Symbol>{sym}</Symbol>
+        <ChangePct down={+data.CHANGEPCT24HOUR < 0} >{isData && `${percFormat(data.CHANGEPCT24HOUR)}%`}</ChangePct>
+      </TopBar>
       <Price noData={!isData}>{isData ? numFormat(data.PRICE) : 'No data'}</Price>
     </PriceTileStyled>
   )

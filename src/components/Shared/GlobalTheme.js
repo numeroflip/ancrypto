@@ -3,7 +3,8 @@ import {createGlobalStyle} from 'styled-components'
 export const breakPoints = {
   desktop: '1024px',
   tablet: '800px',
-  mobile: '600px'
+  mobile: '600px',
+  smallMobile: '350px'
 }
 
 
@@ -61,10 +62,20 @@ export default createGlobalStyle`
         font-size: 13px;
       }
     }
+
+    @media(max-width: ${breakPoints.mobile}) {
+      :root {
+        font-size: 11px;
+      }
+    }
   }
 
   html {
     line-height: 1.5;
+  }
+
+  html, body {
+    height: 100%;
   }
 
   html * {
