@@ -4,7 +4,8 @@ export const breakPoints = {
   desktop: '1024px',
   tablet: '800px',
   mobile: '600px',
-  smallMobile: '370px'
+  smallMobile: '370px',
+  maxWidth: '1400px'
 }
 
 
@@ -25,8 +26,8 @@ export default createGlobalStyle`
     --max-width: 1200px;
 
     /* Colors */
-    --color-success: ${props => props.dark ? '#5be37ed9'  : '#5be37ed9'};
-    --color-success-dark:${props => props.dark ? '#25aa45'  : '#25aa45'};
+    --color-success: ${props => props.dark ? '#25aa45'  : '#5be37ed9'};
+    --color-success-dark:${props => props.dark ? '#5be37ed9'  : '#25aa45'};
 
     --color-danger-lighter: ${props => props.dark ? '#fdd'  : '#fdd'};
     --color-danger-light: ${props => props.dark ? '#ffb3b3'  : '#ffb3b3'};

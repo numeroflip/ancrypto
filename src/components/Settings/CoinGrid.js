@@ -9,7 +9,7 @@ const Grid = styled.div`
     width: 100%;
     margin: var(--xl) auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, .8fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     justify-content: center;
     grid-gap: var(--l);
     align-items: center;

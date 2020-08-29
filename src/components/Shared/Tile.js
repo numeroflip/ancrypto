@@ -19,7 +19,7 @@ export const SelectableTile = styled(Tile)`
 
     &:hover {
         transform: scale(1.05);
-        border-color: var(--color-success);
+        border-color: var(--color-success-dark);
         cursor: pointer;
         box-shadow: var(--shadow)
     }

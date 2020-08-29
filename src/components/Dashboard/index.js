@@ -20,31 +20,34 @@ const ChartGrid = styled.div`
     grid-template-columns: 1fr;
   }
 `
-const Wrapper = styled.div`
-height: 60vh;
-display: flex;
-align-items: center;
-justify-content: center;
-`
+
+const FirstVisitorMessage = () => {
+  return (
+    <H1>
+      Welcome!<br/><br/>
+      To begin, please select your favourite coins from the Settings page.
+    </H1>
+  )
+}
+
 
 const Dashboard = () => {
 
-  const {favourites, coinList} = useContext(DataContext)
+  const {favourites, coinList, prices} = useContext(DataContext)
 
-  return  !favourites.length 
-    ? <Wrapper>
-        <H1>Welcome!<br/><br/>To begin, please select your favourite coins from the <span>Settings</span> page.</H1>
-      </Wrapper>
-    : coinList 
-      ? <>
-          <PriceGrid />
-          <ChartGrid>
-            <CoinSpotlight />
-            <PriceChart />
-          </ChartGrid>
-        </>
-      : <p>Loading Coins...</p>
-    
+  if (!favourites.length) {return <FirstVisitorMessage />}
+  else if (!coinList) {return <p>Loading Coins...</p>}
+  else if (!prices || prices.length !== favourites.length) {return <p>Loading Prices...</p>}
+  else {
+    return (
+      <>
+        <PriceGrid />
+        <ChartGrid>
+          <CoinSpotlight />
+          <PriceChart />
+        </ChartGrid>
+      </>
+    )}
 }
 
 export default Dashboard

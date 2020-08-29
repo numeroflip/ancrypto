@@ -36,7 +36,7 @@ export const CoinTile = styled(SelectableTile)`
         justify-content: center;
         content: ${props => props.remove ? '"X"' : '"+"'};
         padding: var(--s);
-        background: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success)'};
+        background: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success-dark)'};
         opacity: 0;
         transition: ease .2s all;
 

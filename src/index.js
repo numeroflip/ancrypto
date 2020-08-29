@@ -15,7 +15,7 @@ const Layout = styled.div`
   min-height: 100vh;
 
   > * {
-    padding: var(--m);
+    padding: var(--l);
   }
 
   footer {

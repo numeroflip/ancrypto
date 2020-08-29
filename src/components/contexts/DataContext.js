@@ -87,9 +87,9 @@ const fetchHistorical = async (currFavourite, interval) => {
   return historical
 }
 
-  const isDay = () => {
+  const isNight = () => {
     const hour = new Date().getHours();
-    return (hour <= 21 && hour >= 6) 
+    return (hour >= 21 || hour < 6) 
   }
 
   const sortCoins = (cList) => {
@@ -119,11 +119,9 @@ export const DataProvider = ({children}) => {
   const [prices, setPrices] = useState(null);
   const [historicalData, setHistoricalData] = useState([])
   const [historicalInterval, setHistoricalInterval] = useState("months")
-  const [theme, setTheme] = useState(isDay() ? 'light' : 'dark' );
+  const [theme, setTheme] = useState(isNight() ? 'dark' : 'light' );
 
 
-
-  // =============================================================
   // =======================EFFECTS===============================
 
   // --- STARTUP - init data

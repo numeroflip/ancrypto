@@ -21,14 +21,14 @@ const percFormat = (percent) => {
 }
 
 const PriceTileStyled = styled(SelectableTile)`
-
+  border: 0;
   opacity: 0.8;
   box-shadow: var(--shadow);
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
   width: 100%;
-
+  border-left: var(--s) solid transparent;
   ${props => props.noData && css`
     pointer-events: none;
     opacity: 0.3;
