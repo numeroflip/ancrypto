@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
-import {SubHeading} from '../Shared'
 import {DataContext} from '../contexts'
+import { FaLinkedinIn, FaGithub } from "react-icons/fa";
 
 const Footer = styled.footer`
   display: flex;
@@ -10,7 +10,10 @@ const Footer = styled.footer`
   justify-content: center;
 `
 
-const Text = styled(SubHeading)`
+const Text = styled.div`
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
   font-size: var(--ms);
 `
 
@@ -30,6 +33,33 @@ const ThemeToggler = styled.button`
       transform: scale(1.05);
     }
 `
+const Icons = styled.ul`
+  height: auto;
+  font-size: var(--l);
+  margin: 0 var(--s);
+  list-style: none;
+  display: flex;
+   li {
+     margin: var(--s);
+   }
+`
+
+const A = styled.a`
+  display: inline-block;
+  color: var(--color-main-darker);
+  text-decoration: none;
+  transition: ease .2s all;
+  &:hover {
+    transform: translateY(-3px);
+    
+  }
+
+  svg {
+    height: 100%;
+  }
+  
+`
+
 
 export default function () {
 
@@ -44,7 +74,23 @@ export default function () {
             : 'Light theme'
         }
       </ThemeToggler>
-      <Text>This site is made by Áron Berényi</Text>
+      <Text><p>This site is made by <A target="_blank" href="https://numeroflip.github.io/">
+             Áron Berényi</A>
+        </p>
+        <Icons>
+          <li>
+            <A target="_blank" href="https://numeroflip.github.io/">
+             <FaGithub />
+            </A>
+          </li>
+
+          <li>
+            <A target="_blank" href="https://numeroflip.github.io/">
+             <FaLinkedinIn />
+            </A>
+          </li>
+        </Icons>
+        </Text>
     </Footer>
   )
 }

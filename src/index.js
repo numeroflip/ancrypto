@@ -20,6 +20,7 @@ const Layout = styled.div`
 
   footer {
     margin-top: auto;
+    padding-bottom: 0;
   }
 `
 
