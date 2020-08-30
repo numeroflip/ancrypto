@@ -130,8 +130,9 @@ export const DataProvider = ({children}) => {
 
     const init = async () => {
       try {
-         const coins = await fetchCoins()     // 1
+        const coins = await fetchCoins()     // 1
         setCoinList(coins)
+        return null;
       } catch(e) {console.error('Error during startup coinList fetching: ', (e))}
     }    
     init()

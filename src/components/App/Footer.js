@@ -79,13 +79,13 @@ export default function () {
         </p>
         <Icons>
           <li>
-            <A target="_blank" href="https://numeroflip.github.io/">
+            <A target="_blank" href="https://github.com/numeroflip">
              <FaGithub />
             </A>
           </li>
 
           <li>
-            <A target="_blank" href="https://numeroflip.github.io/">
+            <A target="_blank" href="https://www.linkedin.com/in/aron-berenyi/">
              <FaLinkedinIn />
             </A>
           </li>

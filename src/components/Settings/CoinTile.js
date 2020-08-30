@@ -44,16 +44,20 @@ export const CoinTile = styled(SelectableTile)`
 
     @media( hover: none ) {
       border: none;
-
-      padding-right: var(--xxl);
+      overflow: auto;
+      margin-left: 3rem;
 
       &:after {
         font-size: ${props => props.remove ? 'var(--l)' : 'var(--xl)'};
         opacity: 1;
-        height: var(--xl);
-        width: var(--xl);
+        color: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success-dark)'};
+        background: transparent;
+        font-weight: 700;
+        border: 2px solid ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success-dark)'};
+        height: var(--l);
+        width: var(--l);
         bottom: 0;
-        right: 0;
+        left: -3rem;
         top: 50%;
         transform: translateY(-50%);
       }

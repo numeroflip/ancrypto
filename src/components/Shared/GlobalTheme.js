@@ -69,7 +69,9 @@ export default createGlobalStyle`
   button:hover,
   button:active,
   select:hover,
-  select:active {
+  select:active,
+  input:active,
+  input:focus {
     outline: none;
   }
   html {
