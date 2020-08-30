@@ -64,13 +64,14 @@ export default createGlobalStyle`
       }
     }
 
-    /* @media(max-width: ${breakPoints.mobile}) {
-      :root {
-        font-size: 11px;
-      }
-    } */
   }
 
+  button:hover,
+  button:active,
+  select:hover,
+  select:active {
+    outline: none;
+  }
   html {
     line-height: 1.5;
   }

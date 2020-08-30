@@ -10,9 +10,11 @@ export default styled.select`
   border-radius: 5px;
   box-shadow: var(--shadow-light);
   border: 1px solid var(--color-secondary-light);
+  outline: none;
 
   :active,
   :focus {
+    outline: none;
     border-color: var(--color-main);
   }
 `
