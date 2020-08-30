@@ -15,7 +15,7 @@ const Grid = styled.div`
     align-items: center;
 
     @media( max-width: ${breakPoints.tablet}) {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr))
   }
 
     @media( max-width: ${breakPoints.smallMobile}) {

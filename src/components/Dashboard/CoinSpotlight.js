@@ -6,6 +6,7 @@ import {breakPoints} from '../Shared'
 
 
 const SpotLightName = styled.h2`
+  grid-area: title;
   justify-self: center;
   margin: var(--m);
 `
@@ -15,6 +16,7 @@ const SpotTile = styled(Tile)`
   width: 100%;
   display: grid;
   grid-template-rows: auto 1fr;
+  grid-template-areas: "title" "img";
   align-items: center;
   justify-content: center;
   grid-template-columns: 1fr;

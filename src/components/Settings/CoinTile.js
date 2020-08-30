@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import CoinSymbol from './CoinSymbol'
 import styled, { css } from 'styled-components'
 import { DataContext } from '../contexts'
-import { CoinImage } from '../Shared/CoinImage'
+import { CoinImage, breakPoints } from '../Shared'
 
 function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
     return topSection 
@@ -12,15 +12,30 @@ function clickCoinHandler(topSection, coinKey, addCoin, removeCoin) {
 }
 
 const CoinTitle = styled.div`
+    grid-area: title;
     overflow: hidden;
     font-size: var(--m);
     font-weight: 700;
+
 `
 export const CoinTile = styled(SelectableTile)`
     position: relative;
     display: grid;
+    grid-template-areas: "img title" "img sym";
     grid-template-columns: auto 1fr;
     align-items: center;
+    justify-items: start;
+    grid-gap: var(--s);
+
+    @media (hover: none) and (max-width: ${breakPoints.smallMobile}) {
+      justify-items: start;
+      grid-template-areas: "title title" "img sym";
+
+      ${CoinSymbol} {
+        font-size: var(--ms);
+      }
+
+    }
 
     &:after {
         position: absolute;
@@ -44,22 +59,24 @@ export const CoinTile = styled(SelectableTile)`
 
     @media( hover: none ) {
       border: none;
-      overflow: auto;
-      margin-left: 3rem;
+      overflow: visible;
+      margin: 0;
+      padding-left: 3rem;
+      border: 0;
 
       &:after {
         font-size: ${props => props.remove ? 'var(--l)' : 'var(--xl)'};
         opacity: 1;
         color: ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success-dark)'};
-        background: transparent;
         font-weight: 700;
         border: 2px solid ${props => props.remove ? 'var(--color-danger)' : 'var(--color-success-dark)'};
         height: var(--l);
-        width: var(--l);
+        width: var(--m);
+        background: transparent;
+        border-radius: 1rem;
         bottom: 0;
-        left: -3rem;
-        top: 50%;
-        transform: translateY(-50%);
+        left: 0;
+        bottom: var(--m);
       }
     }
 
@@ -81,13 +98,6 @@ export const CoinTile = styled(SelectableTile)`
     }
 `
 
-const MetaWrapper = styled.div`
-    margin-left: var(--m);
-    text-align: left;
-    vertical-align: center;
-    `
-
-
 export default function({coinKey, remove, topSection, disabled}) {
 
     const { coinList, addCoin, removeCoin } = useContext(DataContext)
@@ -97,10 +107,8 @@ export default function({coinKey, remove, topSection, disabled}) {
                 
         <CoinTile as="button" disabled={disabled} onClick={clickCoinHandler(topSection, coinKey, addCoin, removeCoin, )} remove={remove || false} url={coin.imageUrl} name={coin.CoinName} symbol={coin.Symbol}>
             <CoinImage coin={coin} />
-                <MetaWrapper>
-                    <CoinTitle>{coin.CoinName}</CoinTitle>
-                    <CoinSymbol>{coin.Symbol}</CoinSymbol>
-                </MetaWrapper>
+            <CoinTitle>{coin.CoinName}</CoinTitle>
+            <CoinSymbol>{coin.Symbol}</CoinSymbol>
         </CoinTile>
                 
             

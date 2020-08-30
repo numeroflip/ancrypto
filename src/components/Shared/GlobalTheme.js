@@ -4,7 +4,7 @@ export const breakPoints = {
   desktop: '1024px',
   tablet: '800px',
   mobile: '600px',
-  smallMobile: '370px',
+  smallMobile: '400px',
   maxWidth: '1400px'
 }
 
@@ -66,9 +66,9 @@ export default createGlobalStyle`
 
   }
 
-  button:hover,
+  button:focus,
   button:active,
-  select:hover,
+  select:focus,
   select:active,
   input:active,
   input:focus {
