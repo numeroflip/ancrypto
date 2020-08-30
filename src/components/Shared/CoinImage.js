@@ -25,7 +25,7 @@ export const CoinImage = ({ coin , spotlight }) => {
     <CoinImg
       spotlight={spotlight}
       alt={coin.CoinSymbol}
-      src={`https://cryptocompare.com/${coin.ImageUrl}`}
+      src={`https://www.cryptocompare.com${coin.ImageUrl}`}
     />
   )
 }
